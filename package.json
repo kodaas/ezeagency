@@ -1,0 +1,22 @@
+{
+  "name": "ezeagency",
+  "version": "1.0.0",
+  "description": "A training platform for insurance salespersons",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Kosisochukwu Obaejeogu Abasilim",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kabasilim/ezeagency.git"
+  },
+  "bugs": {
+    "url": "https://github.com/kabasilim/ezeagency/issues"
+  },
+  "homepage": "https://github.com/kabasilim/ezeagency#readme"
+}
