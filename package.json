@@ -1,22 +1,17 @@
 {
-  "name": "ezeagency",
-  "version": "1.0.0",
-  "description": "A training platform for insurance salespersons",
-  "main": "index.js",
-  "directories": {
-    "test": "tests"
-  },
+  "name": "nuxt-app",
+  "private": true,
+  "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "nuxt build",
+    "dev": "nuxt dev",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare"
   },
-  "author": "Kosisochukwu Obaejeogu Abasilim",
-  "license": "ISC",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/kabasilim/ezeagency.git"
-  },
-  "bugs": {
-    "url": "https://github.com/kabasilim/ezeagency/issues"
-  },
-  "homepage": "https://github.com/kabasilim/ezeagency#readme"
+  "dependencies": {
+    "nuxt": "^3.11.2",
+    "vue": "^3.4.27",
+    "vue-router": "^4.3.2"
+  }
 }
