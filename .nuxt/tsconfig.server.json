@@ -82,16 +82,29 @@
       "assets": [
         "../assets"
       ],
+      "assets/*": [
+        "../assets/*"
+      ],
       "public": [
         "../public"
       ],
       "public/*": [
         "../public/*"
+      ],
+      "#icon-collections": [
+        "./icon-collections"
+      ],
+      "#supabase/server": [
+        "../node_modules/@nuxtjs/supabase/dist/runtime/server/services/index"
       ]
     }
   },
   "include": [
     "./types/nitro-nuxt.d.ts",
+    "../node_modules/@nuxtjs/tailwindcss/runtime/server",
+    "../node_modules/shadcn-nuxt/runtime/server",
+    "../node_modules/@nuxtjs/supabase/runtime/server",
+    "../node_modules/nuxt-icon/runtime/server",
     "../node_modules/@nuxt/devtools/runtime/server",
     "../node_modules/@nuxt/telemetry/runtime/server",
     "./types/nitro.d.ts",

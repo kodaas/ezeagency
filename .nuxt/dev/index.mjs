@@ -89,6 +89,9 @@ const _inlineRuntimeConfig = {
       "/__nuxt_error": {
         "cache": false
       },
+      "/confirm": {
+        "ssr": false
+      },
       "/_nuxt/builds/meta/**": {
         "headers": {
           "cache-control": "public, max-age=31536000, immutable"
@@ -101,7 +104,36 @@ const _inlineRuntimeConfig = {
       }
     }
   },
-  "public": {}
+  "public": {
+    "supabase": {
+      "url": "https://wwdkebyrtteysodcqgfp.supabase.co",
+      "key": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Ind3ZGtlYnlydHRleXNvZGNxZ2ZwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTYzNDg4NzYsImV4cCI6MjAzMTkyNDg3Nn0.k9Cs7Nj9b8qnYWgNEDojdDEuDlDmp3qYao6e09KzASk",
+      "redirect": true,
+      "redirectOptions": {
+        "login": "/login",
+        "callback": "/confirm",
+        "exclude": [],
+        "cookieRedirect": false
+      },
+      "cookieName": "sb",
+      "cookieOptions": {
+        "maxAge": 28800,
+        "sameSite": "lax",
+        "secure": true
+      },
+      "clientOptions": {
+        "auth": {
+          "flowType": "pkce",
+          "detectSessionInUrl": true,
+          "persistSession": true,
+          "autoRefreshToken": true
+        }
+      }
+    }
+  },
+  "supabase": {
+    "serviceKey": ""
+  }
 };
 const envOptions = {
   prefix: "NITRO_",
