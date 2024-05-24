@@ -4,6 +4,8 @@ import { Badge } from "@/components/ui/badge"
 import { useToast } from '@/components/ui/toast/use-toast'
 
 const supabase = useSupabaseClient()
+const user = useSupabaseUser()
+
 const { toast } = useToast()
 const isLoading = ref(false)
 
@@ -12,7 +14,6 @@ const logout = async () => {
     const { error } = await supabase.auth.signOut()
 
     if (error) {
-        console.log(error)
         isLoading.value = false
         return
     }
@@ -31,16 +32,17 @@ const logout = async () => {
 <template>
     <section class="h-full p-10 flex flex-col justify-between it">
         <div class="space-y-3">
-            <div class="w-20 rounded-lg overflow-hidden">
+            <div class="w-20 rounded-2xl overflow-hidden inline-block">
                 <img class="w-full"
-                    src="https://ui-avatars.com/api/?name=John+Ajala&background=877D7D&color=fff&size=300"
+                    :src="`https://ui-avatars.com/api/?name=${user?.user_metadata.first_name}+${user?.user_metadata.last_name}&background=877D7D&color=fff&size=30`"
                     alt="Profile">
             </div>
 
             <div class="space-y-1">
-                <h3 class="text-2xl text-white">John Ajala</h3>
-                <p class="text-gray-400 text-sm">johnajala@example.com</p>
-                <Badge variant="secondary">User</Badge>
+                <h3 class="text-2xl text-white"> {{ user?.user_metadata.first_name }} {{ user?.user_metadata.last_name
+                    }}</h3>
+                <p class="text-gray-400 text-sm">{{ user?.email }}</p>
+                <Badge variant="secondary">{{ user?.user_metadata.role }}</Badge>
             </div>
         </div>
 

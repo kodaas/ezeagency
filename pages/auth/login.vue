@@ -49,7 +49,11 @@ const onSubmit = async () => {
         return
     }
 
-    console.log(user)
+    toast({
+        title: 'Success',
+        description: 'You have been logged in',
+        variant: "success"
+    })
 
     navigateTo('/')
 
@@ -59,41 +63,43 @@ const onSubmit = async () => {
 </script>
 
 <template>
-        <Card class="mx-auto max-w-sm">
-            <CardHeader>
-                <CardTitle class="text-2xl">
-                    Login
-                </CardTitle>
-                <CardDescription>
-                    Enter your email below to login to your account
-                </CardDescription>
-            </CardHeader>
-            <CardContent>
-                <form @submit.prevent="onSubmit" class="grid gap-4">
-                    <div class="grid gap-2">
-                        <Label for="email">Email</Label>
-                        <Input :disabled="isLoading" v-model="form.email" id="email" type="email" placeholder="m@example.com" required />
+    <Card class="mx-auto max-w-sm">
+        <CardHeader>
+            <CardTitle class="text-2xl">
+                Login
+            </CardTitle>
+            <CardDescription>
+                Enter your email below to login to your account
+            </CardDescription>
+        </CardHeader>
+        <CardContent>
+            <form @submit.prevent="onSubmit" class="grid gap-4">
+                <div class="grid gap-2">
+                    <Label for="email">Email</Label>
+                    <Input :disabled="isLoading" v-model="form.email" id="email" type="email"
+                        placeholder="m@example.com" required />
+                </div>
+                <div class="grid gap-2">
+                    <div class="flex items-center">
+                        <Label for="password">Password</Label>
                     </div>
-                    <div class="grid gap-2">
-                        <div class="flex items-center">
-                            <Label for="password">Password</Label>
-                        </div>
-                        <Input :disabled="isLoading" v-model="form.password" id="password" type="password" required />
-                        <NuxtLink v-if="!isLoading" to="/auth/forgot-password" class="ml-auto inline-block text-sm underline">
-                            Forgot your password?
-                        </NuxtLink>
-                    </div>
-                    <Button :disable="isLoading" type="submit" class="w-full">
-                        <Icon v-if="isLoading" name="svg-spinners:ring-resize" />
-                        <p v-else>Login</p>
-                    </Button>
-                </form>
-                <div class="mt-4 text-center text-sm">
-                    Don't have an account?
-                    <NuxtLink v-if="!isLoading" to="/auth/signup" class="underline">
-                        Sign up
+                    <Input :disabled="isLoading" v-model="form.password" id="password" type="password" required />
+                    <NuxtLink v-if="!isLoading" to="/auth/forgot-password"
+                        class="ml-auto inline-block text-sm underline">
+                        Forgot your password?
                     </NuxtLink>
                 </div>
-            </CardContent>
-        </Card>
+                <Button :disable="isLoading" type="submit" class="w-full">
+                    <Icon v-if="isLoading" name="svg-spinners:ring-resize" />
+                    <p v-else>Login</p>
+                </Button>
+            </form>
+            <div class="mt-4 text-center text-sm">
+                Don't have an account?
+                <NuxtLink v-if="!isLoading" to="/auth/signup" class="underline">
+                    Sign up
+                </NuxtLink>
+            </div>
+        </CardContent>
+    </Card>
 </template>

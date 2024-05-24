@@ -1,3 +1,5 @@
 <template>
-    <h1>Hello World from Certificate</h1>
+    <nav class="pl-10 pt-10 pr-3 pb-3">
+        <h1 class="font-medium text-2xl">Certificate</h1>
+      </nav>
 </template>

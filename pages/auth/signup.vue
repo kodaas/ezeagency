@@ -66,6 +66,7 @@ const onSubmit = async () => {
     toast({
         title: 'Account created',
         description: 'Your account has been created successfully',
+        variant: "success"
     })
 
     navigateTo("/")

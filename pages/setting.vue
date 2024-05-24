@@ -1,3 +1,11 @@
+<script setup lang="ts">
+
+</script>
+
 <template>
-    <h1>Hello World from Setting</h1>
+    <nav class="p-5">
+        <h1 class="font-medium text-2xl">Setting Page</h1>
+    </nav>
+
+    <section></section>
 </template>
