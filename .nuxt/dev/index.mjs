@@ -110,9 +110,12 @@ const _inlineRuntimeConfig = {
       "key": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Ind3ZGtlYnlydHRleXNvZGNxZ2ZwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTYzNDg4NzYsImV4cCI6MjAzMTkyNDg3Nn0.k9Cs7Nj9b8qnYWgNEDojdDEuDlDmp3qYao6e09KzASk",
       "redirect": true,
       "redirectOptions": {
-        "login": "/login",
+        "login": "/auth/login",
         "callback": "/confirm",
-        "exclude": [],
+        "exclude": [
+          "/auth/signup",
+          "/auth/forgot-password"
+        ],
         "cookieRedirect": false
       },
       "cookieName": "sb",
@@ -129,6 +132,11 @@ const _inlineRuntimeConfig = {
           "autoRefreshToken": true
         }
       }
+    },
+    "device": {
+      "enabled": true,
+      "defaultUserAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.39 Safari/537.36",
+      "refreshOnResize": false
     }
   },
   "supabase": {
