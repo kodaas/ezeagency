@@ -21,7 +21,6 @@ import {
   CardTitle,
 } from "@/components/ui/card"
 
-
 const isTablet = useMediaQuery('(max-width: 768px)')
 </script>
 
@@ -42,7 +41,7 @@ const isTablet = useMediaQuery('(max-width: 768px)')
               <p class="text-gray-400 text-sm">3 of 15 Completed</p>
             </div>
 
-            <NuxtLink to="/">
+            <NuxtLink to="/classroom?module=1">
               <Button class="bg-foreground w-32">Continue</Button>
             </NuxtLink>
 
@@ -58,14 +57,7 @@ const isTablet = useMediaQuery('(max-width: 768px)')
           </div>
         </header>
 
-        <ModuleList>
-          <ModuleItem />
-          <ModuleItem />
-          <ModuleItem />
-          <ModuleItem />
-          <ModuleItem />
-          <ModuleItem />
-        </ModuleList>
+        <ModuleList />
 
       </section>
 
