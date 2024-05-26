@@ -8,7 +8,8 @@ export interface ClassroomModuleDto {
     description: string;
   };
   
-  progress: number; // Progress in percentage
+  progress: number;
+  // Progress in percentage
   video: {
     src: string;
     poster: string;

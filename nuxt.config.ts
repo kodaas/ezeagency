@@ -8,21 +8,21 @@ export default defineNuxtConfig({
     "@nuxtjs/supabase",
     "nuxt-icon",
     "@vueuse/nuxt",
-    "@nuxtjs/device"
+    "@nuxtjs/device",
   ],
-  
+
   shadcn: {
     prefix: "",
     componentDir: "./components/ui",
   },
-  
+
   supabase: {
     redirectOptions: {
-      login: '/auth/login',
-      callback: '/confirm',
+      login: "/auth/login",
+      callback: "/confirm",
       include: undefined,
-      exclude: ['/auth/signup', '/auth/forgot-password'],
+      exclude: ["/auth/signup", "/auth/forgot-password", "/auth/reset-email"],
       cookieRedirect: false,
-    }  
-  }
+    },
+  },
 });

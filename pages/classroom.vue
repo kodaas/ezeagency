@@ -23,14 +23,14 @@ type ModuleData = {
         poster: string;
     };
     sections: [
-      {
-        id: string;
-        index: number;
-        title: string;
-        status: number; // 0 - pending, 1 - current , 2 - done
-        module: string;
-      }
-    ]
+        {
+            id: string;
+            index: number;
+            title: string;
+            status: number; // 0 - pending, 1 - current , 2 - done
+            module: string;
+        },
+    ];
 };
 
 definePageMeta({
@@ -44,7 +44,7 @@ const ModuleData = ref<null>(null);
 const options = {
     sources: [
         {
-            src: "https://demo.unified-streaming.com/k8s/features/stable/video/tears-of-steel/tears-of-steel.ism/.m3u8",
+            src: "https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8",
             // src: "https://cph-p2p-msl.akamaized.net/hls/live/2000341/test/master.m3u8",
             type: "application/x-mpegURL",
         },
@@ -68,7 +68,7 @@ onMounted(() => {
 
 <template>
     <NuxtLayout name="classroom">
-        <!-- <AspectRatio
+        <AspectRatio
             v-if="isTablet"
             :ratio="16 / 9"
             class="bg-muted rounded-3xl overflow-hidden"
@@ -86,7 +86,7 @@ onMounted(() => {
             <ClassroomVideoPlayer
                 :options="{ ...options, aspectRatio: '16:7' }"
             />
-        </AspectRatio> -->
+        </AspectRatio>
 
         <section class="mt-8">
             <Tabs default-value="overview" class="w-full h-full">

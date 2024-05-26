@@ -1,73 +1,79 @@
 <script setup lang="ts">
-import { Button } from '@/components/ui/button'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
-import { useToast } from '@/components/ui/toast/use-toast'
+import { Button } from "@/components/ui/button";
+import {
+    Card,
+    CardContent,
+    CardDescription,
+    CardHeader,
+    CardTitle,
+} from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { useToast } from "@/components/ui/toast/use-toast";
 
 definePageMeta({
-    layout: 'auth',
-})
+    layout: "auth",
+});
 
-const supabase = useSupabaseClient()
-const { toast } = useToast()
+const supabase = useSupabaseClient();
+const { toast } = useToast();
 
-const isLoading = ref(false)
+const isLoading = ref(false);
 const form = ref({
-    email: 'redasay886@qiradio.com',
-    password: '12345678'
-})
+    email: "redasay1@qiradio.com",
+    password: "12345678",
+});
 
 const onSubmit = async () => {
-
-    const emailRegex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+    const emailRegex =
+        /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
     if (!emailRegex.test(form.value.email)) {
         toast({
-            title: 'Invalid email',
-            description: 'Please enter a valid email address',
-            variant: "warning"
-        })
-        return
+            title: "Invalid email",
+            description: "Please enter a valid email address",
+            variant: "warning",
+        });
+        return;
     }
 
-    isLoading.value = true
+    isLoading.value = true;
 
-    const { error, data: { user } } = await supabase.auth.signInWithPassword({
+    const {
+        error,
+        data: { user },
+    } = await supabase.auth.signInWithPassword({
         email: form.value.email,
-        password: form.value.password
-    })
+        password: form.value.password,
+    });
 
     if (error) {
         toast({
-            title: 'Error',
+            title: "Error",
             description: error.message,
-            variant: "destructive"
-        })
+            variant: "destructive",
+        });
 
-        isLoading.value = false
-        return
+        isLoading.value = false;
+        return;
     }
 
     toast({
-        title: 'Success',
-        description: 'You have been logged in',
-        variant: "success"
-    })
+        title: "Success",
+        description: "You have been logged in",
+        variant: "success",
+    });
 
-    navigateTo('/')
+    navigateTo("/");
 
-    isLoading.value = false
-}
-
+    isLoading.value = false;
+};
 </script>
 
 <template>
     <Card class="mx-auto max-w-sm">
         <CardHeader>
-            <CardTitle class="text-2xl">
-                Login
-            </CardTitle>
+            <CardTitle class="text-2xl"> Login </CardTitle>
             <CardDescription>
                 Enter your email below to login to your account
             </CardDescription>
@@ -76,16 +82,31 @@ const onSubmit = async () => {
             <form @submit.prevent="onSubmit" class="grid gap-4">
                 <div class="grid gap-2">
                     <Label for="email">Email</Label>
-                    <Input :disabled="isLoading" v-model="form.email" id="email" type="email"
-                        placeholder="m@example.com" required />
+                    <Input
+                        :disabled="isLoading"
+                        v-model="form.email"
+                        id="email"
+                        type="email"
+                        placeholder="m@example.com"
+                        required
+                    />
                 </div>
                 <div class="grid gap-2">
                     <div class="flex items-center">
                         <Label for="password">Password</Label>
                     </div>
-                    <Input :disabled="isLoading" v-model="form.password" id="password" type="password" required />
-                    <NuxtLink v-if="!isLoading" to="/auth/forgot-password"
-                        class="ml-auto inline-block text-sm underline">
+                    <Input
+                        :disabled="isLoading"
+                        v-model="form.password"
+                        id="password"
+                        type="password"
+                        required
+                    />
+                    <NuxtLink
+                        v-if="!isLoading"
+                        to="/auth/forgot-password"
+                        class="ml-auto inline-block text-sm underline"
+                    >
                         Forgot your password?
                     </NuxtLink>
                 </div>

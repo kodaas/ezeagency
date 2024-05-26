@@ -22,10 +22,51 @@ import {
 } from "@/components/ui/card";
 
 const isTablet = useMediaQuery("(max-width: 768px)");
+const supabase = useSupabaseClient();
+const user = useSupabaseUser();
+const pending = ref(true);
+const User = ref<any>(null);
+const Modules = ref<any>(null);
+
+async function getUser() {
+    if (!user.value) {
+        return null;
+    }
+
+    const { data, error } = await supabase
+        .from("User")
+        .select("*")
+        .eq("id", user.value.id)
+        .single();
+
+    if (error) {
+        return null;
+    }
+
+    User.value = data;
+}
+
+async function getModules() {
+    const { data, error } = await supabase.from("Class Module").select("*");
+
+    if (error) {
+        return null;
+    }
+
+    Modules.value = data;
+}
+
+onMounted(async () => {
+    pending.value = true;
+    await getUser();
+    await getModules();
+    pending.value = false;
+});
 </script>
 
 <template>
-    <div class="relative grid grid-cols-7 h-full">
+    <Loader v-if="pending" />
+    <div v-else class="relative grid grid-cols-7 h-full">
         <section
             :class="{ 'col-span-5': !isTablet, 'col-span-7': isTablet }"
             class="overflow-y-auto"
@@ -58,14 +99,22 @@ const isTablet = useMediaQuery("(max-width: 768px)");
                             <img src="@/assets/img/plant.png" alt="" />
                         </div>
                         <div
-                            class="bg-primary w-[40%] rounded-3xl h-full grid place-items-center"
+                            :style="`width: ${User.progress}%`"
+                            class="bg-primary rounded-3xl h-full grid place-items-center"
                         >
-                            <p class="text-white font-medium text-lg">40%</p>
+                            <p class="text-white font-medium text-lg">
+                                {{ User.progress }}%
+                            </p>
                         </div>
                     </div>
                 </header>
 
-                <ModuleList />
+                <ModuleList
+                    :completed="User.completed_modules"
+                    :modules="Modules"
+                    :active="User.active_module"
+                    :activeSection="User.active_section"
+                />
             </section>
         </section>
 
@@ -98,7 +147,7 @@ const isTablet = useMediaQuery("(max-width: 768px)");
                     class="flex flex-row items-center justify-between space-y-0 pb-2"
                 >
                     <CardTitle class="text-sm font-medium">
-                        Certificates
+                        Questions
                     </CardTitle>
                     <Icon
                         class="h-4 w-4 text-muted-foreground"
@@ -106,10 +155,8 @@ const isTablet = useMediaQuery("(max-width: 768px)");
                     />
                 </CardHeader>
                 <CardContent>
-                    <div class="text-2xl font-bold">3</div>
-                    <p class="text-xs text-muted-foreground">
-                        +12 more to complete
-                    </p>
+                    <div class="text-2xl font-bold">10</div>
+                    <p class="text-xs text-muted-foreground">+5 Answered</p>
                 </CardContent>
             </Card>
         </aside>
