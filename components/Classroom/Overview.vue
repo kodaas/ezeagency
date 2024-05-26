@@ -25,6 +25,6 @@ const { data, pending } = useLazyAsyncData("Overview", () =>
             {{ data?.section_index }}. {{ data?.section_title }}
         </p>
 
-        <p class="text-gray-600">{{ data?.content }}</p>
+        <p class="text-gray-600" v-html="data?.content"></p>
     </section>
 </template>
