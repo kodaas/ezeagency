@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const route = useRoute();
+import type { SupabaseClient, User } from "@supabase/supabase-js";
 import { Button } from "@/components/ui/button";
 import { useMediaQuery } from "@vueuse/core";
 import {
@@ -22,55 +22,15 @@ import {
 } from "@/components/ui/card";
 
 const isTablet = useMediaQuery("(max-width: 768px)");
-const supabase = useSupabaseClient();
-const user = useSupabaseUser();
-const pending = ref(true);
-const User = ref<any>(null);
-const Modules = ref<any>(null);
+const { data: User, pending: UserPending } = useLazyAsyncData("User", () => MetaDataService().getMetaData())
+const { data: Modules, pending: ModulesPending } = useLazyAsyncData("Modules", () => ModuleService().getModules());
 
-async function getUser() {
-    if (!user.value) {
-        return null;
-    }
-
-    const { data, error } = await supabase
-        .from("User")
-        .select("*")
-        .eq("id", user.value.id)
-        .single();
-
-    if (error) {
-        return null;
-    }
-
-    User.value = data;
-}
-
-async function getModules() {
-    const { data, error } = await supabase.from("Class Module").select("*");
-
-    if (error) {
-        return null;
-    }
-
-    Modules.value = data;
-}
-
-onMounted(async () => {
-    pending.value = true;
-    await getUser();
-    await getModules();
-    pending.value = false;
-});
 </script>
 
 <template>
-    <Loader v-if="pending" />
-    <div v-else class="relative grid grid-cols-7 h-full">
-        <section
-            :class="{ 'col-span-5': !isTablet, 'col-span-7': isTablet }"
-            class="overflow-y-auto"
-        >
+    <Loader v-if="UserPending || ModulesPending" />
+     <div v-else class="relative grid grid-cols-7 h-full">
+        <section :class="{ 'col-span-5': !isTablet, 'col-span-7': isTablet }" class="overflow-y-auto">
             <nav class="pl-10 pt-10 pr-3 pb-3">
                 <h1 class="font-medium text-2xl">Dashboard</h1>
             </nav>
@@ -81,58 +41,41 @@ onMounted(async () => {
                         <div class="space-y-1">
                             <h1 class="font-bold text-2xl">Modules</h1>
                             <p class="text-gray-400 text-sm">
-                                3 of 15 Completed
+                                {{ User?.completed_modules.length }} of {{ Modules?.length }} Completed
                             </p>
                         </div>
 
                         <NuxtLink
-                            to="/classroom?module=84559be9-31e1-4cbe-9b52-87832ace7a20&section=fcedf409-3175-41fd-b8a4-3514cf64f48e"
-                        >
+                            :to="`/classroom/${User?.active_module}/${User?.active_section}`">
                             <Button class="bg-foreground w-32">Continue</Button>
                         </NuxtLink>
                     </div>
 
-                    <div
-                        class="relative overflow-hidden bg-primary-foreground rounded-3xl h-20"
-                    >
+                    <div class="relative overflow-hidden bg-primary-foreground rounded-3xl h-20">
                         <div class="absolute top-0 right-0 p-2 pr-3">
                             <img src="@/assets/img/plant.png" alt="" />
                         </div>
-                        <div
-                            :style="`width: ${User.progress}%`"
-                            class="bg-primary rounded-3xl h-full grid place-items-center"
-                        >
+                        <div :style="`width: ${User?.progress}%`"
+                            class="bg-primary rounded-3xl h-full grid place-items-center">
                             <p class="text-white font-medium text-lg">
-                                {{ User.progress }}%
+                                {{ User?.progress }}%
                             </p>
                         </div>
                     </div>
                 </header>
 
-                <ModuleList
-                    :completed="User.completed_modules"
-                    :modules="Modules"
-                    :active="User.active_module"
-                    :activeSection="User.active_section"
-                />
+                <ModuleList :completed="User?.completed_modules!" :modules="Modules!" :active="User?.active_module!"
+                    :activeSection="User?.active_section!" />
             </section>
         </section>
 
-        <aside
-            v-if="!isTablet"
-            class="bg-slate-100 col-span-2 h-full p-8 space-y-3"
-        >
+        <aside v-if="!isTablet" class="bg-slate-100 col-span-2 h-full p-8 space-y-3">
             <Card>
-                <CardHeader
-                    class="flex flex-row items-center justify-between space-y-0 pb-2"
-                >
+                <CardHeader class="flex flex-row items-center justify-between space-y-0 pb-2">
                     <CardTitle class="text-sm font-medium">
                         Certificates
                     </CardTitle>
-                    <Icon
-                        class="h-4 w-4 text-muted-foreground"
-                        name="solar:document-add-outline"
-                    />
+                    <Icon class="h-4 w-4 text-muted-foreground" name="solar:document-add-outline" />
                 </CardHeader>
                 <CardContent>
                     <div class="text-2xl font-bold">3</div>
@@ -143,16 +86,11 @@ onMounted(async () => {
             </Card>
 
             <Card>
-                <CardHeader
-                    class="flex flex-row items-center justify-between space-y-0 pb-2"
-                >
+                <CardHeader class="flex flex-row items-center justify-between space-y-0 pb-2">
                     <CardTitle class="text-sm font-medium">
                         Questions
                     </CardTitle>
-                    <Icon
-                        class="h-4 w-4 text-muted-foreground"
-                        name="solar:document-add-outline"
-                    />
+                    <Icon class="h-4 w-4 text-muted-foreground" name="solar:document-add-outline" />
                 </CardHeader>
                 <CardContent>
                     <div class="text-2xl font-bold">10</div>
@@ -161,17 +99,11 @@ onMounted(async () => {
             </Card>
         </aside>
 
-        <div
-            v-if="isTablet"
-            class="absolute w-full bottom-0 right-0 flex pb-5 items-center justify-center"
-        >
+        <div v-if="isTablet" class="absolute w-full bottom-0 right-0 flex pb-5 items-center justify-center">
             <Drawer>
                 <DrawerTrigger>
                     <Button class="shadow-lg">
-                        <Icon
-                            class="text-lg mr-2"
-                            name="solar:chart-2-bold-duotone"
-                        />
+                        <Icon class="text-lg mr-2" name="solar:chart-2-bold-duotone" />
                         Stats
                     </Button>
                 </DrawerTrigger>
@@ -181,16 +113,11 @@ onMounted(async () => {
                         <DrawerDescription>
                             This action cannot be undone.
                             <Card>
-                                <CardHeader
-                                    class="flex flex-row items-center justify-between space-y-0 pb-2"
-                                >
+                                <CardHeader class="flex flex-row items-center justify-between space-y-0 pb-2">
                                     <CardTitle class="text-sm font-medium">
                                         Certificates
                                     </CardTitle>
-                                    <Icon
-                                        class="h-4 w-4 text-muted-foreground"
-                                        name="solar:document-add-outline"
-                                    />
+                                    <Icon class="h-4 w-4 text-muted-foreground" name="solar:document-add-outline" />
                                 </CardHeader>
                                 <CardContent>
                                     <div class="text-2xl font-bold">3</div>

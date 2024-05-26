@@ -1,19 +1,9 @@
-import type { ClassroomSectionDto } from "./ClassroomSectionDto";
-
 export interface ClassroomModuleDto {
   id: string;
-  
-  overview: {
-    title: string;
-    description: string;
-  };
-  
-  progress: number;
-  // Progress in percentage
-  video: {
-    src: string;
-    poster: string;
-  };
-  
-  sections: [ClassroomSectionDto];
+  created_at: Date;
+  title: string;
+  duration: number;
+  index: number;
+  quiz_url: string;
+  number_of_sections: number;
 }

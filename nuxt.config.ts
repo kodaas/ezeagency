@@ -2,6 +2,11 @@
 export default defineNuxtConfig({
   devtools: { enabled: true },
   ssr: false,
+
+  imports: {
+    dirs: ["./services"],
+  },
+
   modules: [
     "@nuxtjs/tailwindcss",
     "shadcn-nuxt",

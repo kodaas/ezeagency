@@ -1,7 +1,9 @@
 export interface ClassroomSectionDto {
   id: string;
-  index: number;
+  created_at: string; // ISO 8601 date-time format
+  video_id: string;
   title: string;
-  status: number; // 0 - pending, 1 - current , 2 - done
-  module: string;
+  index: number;
+  class_module: string;
+  status?: "pending" | "active" | "completed";
 }

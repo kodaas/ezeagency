@@ -17,10 +17,11 @@ const redirect = () => {
     }
 
     if (props.status === "completed") {
+        navigateTo(`/classroom?module=${props.id}`);
         return;
     }
 
-    navigateTo(``);
+    navigateTo(`/classroom/${props.id}/${props.activeSection}`);
 };
 </script>
 
