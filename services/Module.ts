@@ -1,31 +1,53 @@
 import { useToast } from "@/components/ui/toast/use-toast";
-const { toast } = useToast()
-
+const { toast } = useToast();
 
 const getModules = async () => {
-    const supabase = useSupabaseClient();
-    try {
+  const supabase = useSupabaseClient();
+  try {
+    const { data, error } = await supabase.from("Class Module").select("*");
 
-        const { data, error } = await supabase.from("Class Module").select("*");
-        
-        if (error) {
-            throw error
-        }
-        return data
-
-    } catch (error: any) {
-        toast({
-            title: "Error",
-            description: error.message,
-            variant: "destructive",
-        });
-
-        return null;
+    if (error) {
+      throw error;
     }
-}
+    return data;
+  } catch (error: any) {
+    toast({
+      title: "Error",
+      description: error.message,
+      variant: "destructive",
+    });
+
+    return null;
+  }
+};
+
+const getModule = async (module_id: string) => {
+  const supabase = useSupabaseClient();
+  try {
+    const { data, error } = await supabase
+      .from("Class Module")
+      .select("*")
+      .eq("id", module_id)
+      .single();
+
+    if (error) {
+      throw error;
+    }
+    return data;
+  } catch (error: any) {
+    toast({
+      title: "Error",
+      description: error.message,
+      variant: "destructive",
+    });
+
+    return null;
+  }
+};
 
 export const ModuleService = () => {
-    return {
-        getModules
-    }
-}
+  return {
+    getModules,
+    getModule,
+  };
+};

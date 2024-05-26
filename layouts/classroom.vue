@@ -70,7 +70,7 @@ const isTablet = useMediaQuery("(max-width: 768px)");
                     </div>
                 </nav>
 
-                <section class="px-5 lg:px-10">
+                <section class="px-5 lg:px-10 h-full overflow-y-auto">
                     <slot />
                 </section>
             </section>

@@ -11,9 +11,11 @@ definePageMeta({
 
 const isTablet = useMediaQuery("(max-width: 900px)");
 const route = useRoute();
-const { data: activeSection } = useLazyAsyncData("activeSection", () =>
-    SectionService().getSection(route.params.section as string),
+const { data: activeSection, pending: sectionPending } = useLazyAsyncData(
+    "activeSection",
+    () => SectionService().getSection(route.params.section as string),
 );
+
 const { data: videoData, pending } = useLazyAsyncData("videoData", () =>
     VideoService().getVideo(route.params.section as string),
 );
@@ -37,9 +39,6 @@ const options = computed(() => {
 
 onMounted(() => {
     if (!route.params.section) navigateTo(`/classroom/${route.params.module}`);
-
-    if (activeSection && activeSection.value?.status === "active")
-        console.log();
 });
 </script>
 
@@ -76,15 +75,18 @@ onMounted(() => {
         <Loader />
     </AspectRatio>
 
-    <section class="mt-8">
-        <Tabs default-value="overview" class="w-full h-full">
+    <section class="mt-8 overflow-y-auto">
+        <Tabs
+            default-value="overview"
+            class="w-full min-h-screen overflow-y-auto"
+        >
             <TabsList>
                 <TabsTrigger value="overview"> Overview </TabsTrigger>
                 <TabsTrigger value="resources"> Resources </TabsTrigger>
                 <TabsTrigger value="questions"> Questions </TabsTrigger>
             </TabsList>
 
-            <TabsContent class="" value="overview">
+            <TabsContent class="min-h-screen overflow-y-auto" value="overview">
                 <ClassroomOverview />
             </TabsContent>
 
