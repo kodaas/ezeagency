@@ -29,8 +29,8 @@ const {
                     activeSection?.id! === section.id
                         ? "active"
                         : activeSection?.index! > section.index
-                          ? "completed"
-                          : "pending";
+                            ? "completed"
+                            : "pending";
                 return section;
             });
         },
@@ -73,10 +73,7 @@ onMounted(() => {
                         {{ progress }}% completed
                     </p>
                     <div class="h-1.5 rounded-lg overflow-hidden bg-gray-200">
-                        <div
-                            :style="`width: ${progress}%`"
-                            class="h-full rounded-lg bg-primary"
-                        ></div>
+                        <div :style="`width: ${progress}%`" class="h-full rounded-lg bg-primary"></div>
                     </div>
                 </div>
             </div>
@@ -84,22 +81,12 @@ onMounted(() => {
             <div class="mt-10 h-full">
                 <p>Course Sections (5)</p>
 
-                <div
-                    v-if="!pendingSection"
-                    class="mt-5 space-y-3 h-[60vh] lg:h-[60%] overflow-y-auto"
-                >
-                    <ClassroomSectionItem
-                        v-for="section in sections"
-                        :key="section.id"
-                        v-bind="section"
-                    />
+                <div v-if="!pendingSection" class="mt-5 space-y-3 h-[60vh] lg:h-[60%] overflow-y-auto">
+                    <ClassroomSectionItem v-for="section in sections" :key="section.id" v-bind="section" />
                 </div>
 
                 <Button disabled class="mt-10 w-full">
-                    <Icon
-                        class="text-xl mr-2"
-                        name="solar:question-square-line-duotone"
-                    />
+                    <Icon class="text-xl mr-2" name="solar:question-square-line-duotone" />
                     Take Quiz
                 </Button>
             </div>

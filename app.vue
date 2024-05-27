@@ -13,8 +13,6 @@ const isOnline = useOnline();
     <NuxtLayout>
         <NuxtPage v-if="isOnline" />
 
-        <main v-else>
-            <h1>Offline</h1>
-        </main>
+        <Offline v-else />
     </NuxtLayout>
 </template>

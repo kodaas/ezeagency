@@ -69,16 +69,35 @@ const onSubmit = async () => {
         return;
     }
 
+    //     active_module: string;
+    //     active_section: string;
+    //     completed_modules: string[]; // Assuming it's an array of strings (module IDs)
+    //     created_at: string; // ISO 8601 date-time format
+    //     id: string;
+    //     progress: number;
+    //     video_timestamp: number;
+    //     number_of_questions: number;
+    //     number_of_certificate: number;
+
     // Create Supabase User Role
-    const { data, error: RoleError } = await supabase
-        .from("User")
-        .insert([
-            {
-                modules: [],
-                progress: 0,
-            },
-        ])
+
+    const { data, error } = await supabase
+        .from('User')
+        .insert([{}])
         .select();
+
+
+    if (error) {
+        toast({
+            title: "Error creating account",
+            description: error.message,
+            variant: "destructive",
+        });
+        isLoading.value = false;
+        return;
+    }
+
+    console.log(data)
 
     toast({
         title: "Account created",
@@ -105,57 +124,29 @@ const onSubmit = async () => {
                 <div class="grid grid-cols-2 gap-4">
                     <div class="grid gap-2">
                         <Label for="first-name">First name</Label>
-                        <Input
-                            v-model="form.firstName"
-                            :disabled="isLoading"
-                            id="first-name"
-                            placeholder="Max"
-                            required
-                        />
+                        <Input v-model="form.firstName" :disabled="isLoading" id="first-name" placeholder="Max"
+                            required />
                     </div>
                     <div class="grid gap-2">
                         <Label for="last-name">Last name</Label>
-                        <Input
-                            v-model="form.lastName"
-                            :disabled="isLoading"
-                            id="last-name"
-                            placeholder="Robinson"
-                            required
-                        />
+                        <Input v-model="form.lastName" :disabled="isLoading" id="last-name" placeholder="Robinson"
+                            required />
                     </div>
                 </div>
                 <div class="grid gap-2">
                     <Label for="email">Email</Label>
-                    <Input
-                        v-model="form.email"
-                        :disabled="isLoading"
-                        id="email"
-                        type="email"
-                        placeholder="m@example.com"
-                        required
-                    />
+                    <Input v-model="form.email" :disabled="isLoading" id="email" type="email"
+                        placeholder="m@example.com" required />
                 </div>
                 <div class="grid gap-2">
                     <Label for="phone">Phone Number</Label>
-                    <Input
-                        v-model="form.phone"
-                        :disabled="isLoading"
-                        id="phone"
-                        type="text"
-                        placeholder="07012345678"
-                        required
-                    />
+                    <Input v-model="form.phone" :disabled="isLoading" id="phone" type="text" placeholder="07012345678"
+                        required />
                 </div>
                 <div class="grid gap-2">
                     <Label for="password">Password</Label>
-                    <Input
-                        v-model="form.password"
-                        :disabled="isLoading"
-                        id="password"
-                        type="password"
-                        placeholder="****"
-                        required
-                    />
+                    <Input v-model="form.password" :disabled="isLoading" id="password" type="password"
+                        placeholder="****" required />
                 </div>
                 <Button :disabled="isLoading" type="submit" class="w-full">
                     <Icon v-if="isLoading" name="svg-spinners:ring-resize" />

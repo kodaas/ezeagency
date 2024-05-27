@@ -29,7 +29,7 @@ const { data: Modules, pending: ModulesPending } = useLazyAsyncData("Modules", (
 
 <template>
     <Loader v-if="UserPending || ModulesPending" />
-     <div v-else class="relative grid grid-cols-7 h-full">
+    <div v-else class="relative grid grid-cols-7 h-full">
         <section :class="{ 'col-span-5': !isTablet, 'col-span-7': isTablet }" class="overflow-y-auto">
             <nav class="pl-10 pt-10 pr-3 pb-3">
                 <h1 class="font-medium text-2xl">Dashboard</h1>
@@ -45,8 +45,7 @@ const { data: Modules, pending: ModulesPending } = useLazyAsyncData("Modules", (
                             </p>
                         </div>
 
-                        <NuxtLink
-                            :to="`/classroom/${User?.active_module}/${User?.active_section}`">
+                        <NuxtLink :to="`/classroom/${User?.active_module}/${User?.active_section}`">
                             <Button class="bg-foreground w-32">Continue</Button>
                         </NuxtLink>
                     </div>
@@ -70,6 +69,7 @@ const { data: Modules, pending: ModulesPending } = useLazyAsyncData("Modules", (
         </section>
 
         <aside v-if="!isTablet" class="bg-slate-100 col-span-2 h-full p-8 space-y-3">
+            <NuxtLink class="block" to="/certificate">
             <Card>
                 <CardHeader class="flex flex-row items-center justify-between space-y-0 pb-2">
                     <CardTitle class="text-sm font-medium">
@@ -78,25 +78,28 @@ const { data: Modules, pending: ModulesPending } = useLazyAsyncData("Modules", (
                     <Icon class="h-4 w-4 text-muted-foreground" name="solar:document-add-outline" />
                 </CardHeader>
                 <CardContent>
-                    <div class="text-2xl font-bold">3</div>
+                    <div class="text-2xl font-bold">{{ User?.number_of_certificate }}</div>
                     <p class="text-xs text-muted-foreground">
-                        +12 more to complete
+                        +{{ Modules?.length! - User?.number_of_certificate! }} more to complete
                     </p>
                 </CardContent>
             </Card>
+        </NuxtLink>
 
-            <Card>
-                <CardHeader class="flex flex-row items-center justify-between space-y-0 pb-2">
-                    <CardTitle class="text-sm font-medium">
-                        Questions
-                    </CardTitle>
-                    <Icon class="h-4 w-4 text-muted-foreground" name="solar:document-add-outline" />
-                </CardHeader>
-                <CardContent>
-                    <div class="text-2xl font-bold">10</div>
-                    <p class="text-xs text-muted-foreground">+5 Answered</p>
-                </CardContent>
-            </Card>
+            <NuxtLink class="block" to="/questions">
+                <Card>
+                    <CardHeader class="flex flex-row items-center justify-between space-y-0 pb-2">
+                        <CardTitle class="text-sm font-medium">
+                            Questions
+                        </CardTitle>
+                        <Icon class="h-4 w-4 text-muted-foreground" name="solar:document-add-outline" />
+                    </CardHeader>
+                    <CardContent>
+                        <div class="text-2xl font-bold">{{ User?.number_of_questions }}</div>
+                        <p class="text-xs text-muted-foreground">+5 Answered</p>
+                    </CardContent>
+                </Card>
+            </NuxtLink>
         </aside>
 
         <div v-if="isTablet" class="absolute w-full bottom-0 right-0 flex pb-5 items-center justify-center">
