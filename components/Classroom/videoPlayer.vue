@@ -2,13 +2,13 @@
 import videojs from "video.js";
 import "video.js/dist/video-js.css";
 import { useIntervalFn } from '@vueuse/core'
+import type { ClassroomSectionDto } from "~/models";
 
 
 const props = defineProps<{
     options: any,
     timestamp: number
-    section_id: string,
-    active_section?: string,
+    activeSectionStatus: 'pending' | 'active' | 'completed',
 }>();
 
 const emit = defineEmits(["videoEnded"]);
@@ -35,7 +35,7 @@ const InitializePlayer = () => {
     player.value.on("seeking", (e: any) => {
         e.preventDefault();
 
-        if (player.value.currentTime() > currentTime.value)
+        if (player.value.currentTime() > currentTime.value && props.active_section_status !== "completed")
             player.value.currentTime(currentTime.value);
     });
 

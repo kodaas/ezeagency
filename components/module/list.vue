@@ -17,21 +17,21 @@ const pending = computed(() => {
 });
 
 const newCompleted = computed(() => {
-  console.log(props.modules)
-  return props.modules.filter((module) => module.id !== props.active && module.index < activeModule.value?.index!);
+  if (props.active || props.activeSection) return props.modules.filter((module) => module.id !== props.active && module.index < activeModule.value?.index!);
+  else return props.modules
 })
 
 </script>
 
 <template>
-  <Tabs default-value="pending" class="w-full">
+  <Tabs :default-value="props.active ||  props.active !== null ? 'pending' : 'completed'" class="w-full">
     <TabsList>
       <TabsTrigger value="pending"> Pending </TabsTrigger>
       <TabsTrigger value="completed"> Completed </TabsTrigger>
     </TabsList>
 
     <TabsContent class="w-full" value="pending">
-      <div v-if="props.modules.length === 0" class="p-16 text-center space-y-2">
+      <div v-if="props.modules.length === 0 || !props.active || !props.activeSection" class="p-16 text-center space-y-2">
         <Empty class="w-52 mx-auto" />
         <p>😥 No Module Found</p>
       </div>

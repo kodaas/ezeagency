@@ -7,7 +7,7 @@ const { data: resources, pending } = useLazyAsyncData("Resources", () =>
 
 <template>
     <div v-if="pending">
-        <Loader />
+        <Loader class="w-full h-full grid place-items-center" />
     </div>
 
     <section v-else class="px-0 py-5 lg:p-5 space-y-5">

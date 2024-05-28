@@ -20,15 +20,28 @@ import {
     CardHeader,
     CardTitle,
 } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge"
+
 
 const isTablet = useMediaQuery("(max-width: 768px)");
-const { data: User, pending: UserPending } = useLazyAsyncData("User", () => MetaDataService().getMetaData())
-const { data: Modules, pending: ModulesPending } = useLazyAsyncData("Modules", () => ModuleService().getModules());
+const { data: User, pending: UserPending, execute: executeUser } = useLazyAsyncData("User", () => MetaDataService().getMetaData(), {immediate: false})
+const { data: Modules, pending: ModulesPending, execute: executeModules } = useLazyAsyncData("Modules", () => ModuleService().getModules(), {immediate: false});
+const pending = ref(true)
 
+onMounted(async () => {
+    pending.value = true
+    await executeUser()
+    await executeModules()
+    pending.value = false
+})
 </script>
 
 <template>
-    <Loader v-if="UserPending || ModulesPending" />
+    <div class="w-full h-full grid place-items-center place-content-center" v-if="pending">
+        <Logo class="w-32 animate-pulse" />
+        <Loader />
+    </div>
+
     <div v-else class="relative grid grid-cols-7 h-full">
         <section :class="{ 'col-span-5': !isTablet, 'col-span-7': isTablet }" class="overflow-y-auto">
             <nav class="pl-10 pt-10 pr-3 pb-3">
@@ -44,9 +57,11 @@ const { data: Modules, pending: ModulesPending } = useLazyAsyncData("Modules", (
                                 {{ User?.number_of_completed_modules }} of {{ Modules?.length }} Completed
                             </p>
                         </div>
+                        
+                        <Badge v-if="User?.number_of_completed_modules === Modules?.length" variant="secondary">All Module Completed</Badge>
 
-                        <NuxtLink :to="`/classroom/${User?.active_module}/${User?.active_section}`">
-                            <Button class="bg-foreground w-32">Continue</Button>
+                        <NuxtLink v-else :to="`/classroom/${User?.active_module}/${User?.active_section}`">
+                            <Button class="bg-foreground w-32">Jump Right In 🔥</Button>
                         </NuxtLink>
                     </div>
 
@@ -68,7 +83,6 @@ const { data: Modules, pending: ModulesPending } = useLazyAsyncData("Modules", (
                         </div>
                     </div>
                 </header>
-
                 <ModuleList :modules="Modules!" :active="User?.active_module!" :activeSection="User?.active_section!" />
             </section>
         </section>

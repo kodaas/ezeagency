@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import type { ClassroomSectionDto } from '~/models';
+
 const route = useRoute();
 const moduleId = computed(() => route.params.module as string);
 const progress = computed(() => {
@@ -13,49 +15,13 @@ const progress = computed(() => {
 const uniqueKey = ref(Math.random())
 
 const {
-    data: sections,
-    execute,
-    pending: pendingSection,
-    refresh: refreshSection
-} = useLazyAsyncData(
-    "sections",
-    () => SectionService().getSections(moduleId.value),
-    {
-        immediate: false,
-        watch: [uniqueKey],
-        transform: (data) => {
-            const activeSection = data?.find(
-                (section) => section.id === User.value?.active_section
-            );
-
-            return data?.map((section) => {
-                section.status =
-                    activeSection?.id! === section.id
-                        ? "active"
-                        : activeSection?.index! > section.index
-                            ? "completed"
-                            : "pending";
-                return section;
-            });
-        },
-    }
-);
-
-
-const {
     data: User,
     pending: pendingUser,
     execute: getUser,
     refresh: refreshUser
-} = useLazyAsyncData(
-    "User",
-    () => {
-        const data = MetaDataService().getMetaData();
-        return data;
-    },
-    { immediate: false, watch: [uniqueKey]}
-);
+} = useLazyAsyncData("User", () => MetaDataService().getMetaData(), { immediate: false, watch: [uniqueKey]});
 
+const {data: sections, execute, pending: pendingSection, refresh: refreshSection} = useLazyAsyncData("sections", () => SectionService().getSections(moduleId.value),{ immediate: false, watch: [uniqueKey],});
 
 const pending = computed(() => pendingSection.value && pendingUser.value);
 
@@ -96,7 +62,10 @@ onMounted(async () => {
             <div class="mt-10 h-full">
                 <p>Course Sections ({{ sections?.length }})</p>
 
-                <div v-if="!pending" class="mt-5 space-y-3 h-[60vh] lg:h-[60%] overflow-y-auto">
+                <div v-if="pending">
+                    <Loader class="w-full h-[20rem] grid place-items-center" />
+                </div>
+                <div v-else class="mt-5 space-y-3 h-[60vh] lg:h-[60%] overflow-y-auto">
                     <ClassroomSectionItem v-for="section in sections" :key="section.id + uniqueKey" :status="section.status!"
                         v-bind="section" />
                 </div>

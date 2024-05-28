@@ -21,11 +21,11 @@ const { toast } = useToast();
 
 const isLoading = ref(false);
 const form = ref({
-    firstName: "John",
-    lastName: "Ajala",
-    email: "redasay886@qiradio.com",
-    phone: "07033883399",
-    password: "12345678",
+    firstName: "",
+    lastName: "",
+    email: "",
+    phone: "",
+    password: "",
 });
 
 const onSubmit = async () => {

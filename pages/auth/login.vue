@@ -20,8 +20,8 @@ const { toast } = useToast();
 
 const isLoading = ref(false);
 const form = ref({
-    email: "redasay1@qiradio.com",
-    password: "12345678",
+    email: "",
+    password: "",
 });
 
 const onSubmit = async () => {
