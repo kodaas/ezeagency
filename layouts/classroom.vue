@@ -77,7 +77,7 @@ const isTablet = useMediaQuery("(max-width: 768px)");
 
             <aside
                 v-if="!isTablet"
-                class="bg-slate-100 col-span-2 h-screen overflow-hidden p-8 space-y-3"
+                class="bg-slate-100 col-span-2 h-screen overflow-y-auto p-8 space-y-3"
             >
                 <slot name="sidebar" />
             </aside>

@@ -6,4 +6,5 @@ export interface ClassroomModuleDto {
   index: number;
   quiz_url: string;
   number_of_sections: number;
+  section_id: string
 }

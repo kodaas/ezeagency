@@ -24,14 +24,14 @@ const getMetaData = async (): Promise<MetaDataDto | null> => {
             .select("*")
             .eq("id", user.value.id)
             .single();
-    
+
         if (error) {
             throw error
         }
 
         MetaData.value = data
         return MetaData.value
-    
+
     } catch (error: any) {
         toast({
             title: "Error",
@@ -43,8 +43,40 @@ const getMetaData = async (): Promise<MetaDataDto | null> => {
     }
 }
 
+const updateMetaData = async (update: any): Promise<MetaDataDto | null> => {
+
+    const supabase = useSupabaseClient();
+    const user = useSupabaseUser();
+
+    if (!user.value) {
+        return null;
+    }
+
+    try {
+        // @ts-ignore
+        const { data, error } = await supabase.from("User").update(update).eq("id", user.value.id).single()
+
+        if (error) {
+            throw error
+        }
+
+        MetaData.value = data
+        return MetaData.value
+
+    } catch (error: any) {
+        toast({
+            title: "Error",
+            description: error.message,
+            variant: "destructive",
+        });
+
+        return null
+    }
+}
+
 export const MetaDataService = () => {
     return {
-        getMetaData
+        getMetaData,
+        updateMetaData
     }
 }

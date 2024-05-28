@@ -12,10 +12,6 @@ const props = defineProps<{
     class_module: ClassroomSectionDto["class_module"];
     status: "pending" | "active" | "completed";
 }>();
-
-onMounted(() => {
-    console.log("Mounted");
-});
 </script>
 
 <template>

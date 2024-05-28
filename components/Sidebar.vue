@@ -24,7 +24,9 @@ const logout = async () => {
         description: 'You have been logged out',
         variant: "success"
     })
+
     navigateTo('/auth/login')
+    window.location.reload()
 }
 
 </script>

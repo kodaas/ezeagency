@@ -41,7 +41,7 @@ const { data: Modules, pending: ModulesPending } = useLazyAsyncData("Modules", (
                         <div class="space-y-1">
                             <h1 class="font-bold text-2xl">Modules</h1>
                             <p class="text-gray-400 text-sm">
-                                {{ User?.completed_modules.length }} of {{ Modules?.length }} Completed
+                                {{ User?.number_of_completed_modules }} of {{ Modules?.length }} Completed
                             </p>
                         </div>
 
@@ -54,37 +54,42 @@ const { data: Modules, pending: ModulesPending } = useLazyAsyncData("Modules", (
                         <div class="absolute top-0 right-0 p-2 pr-3">
                             <img src="@/assets/img/plant.png" alt="" />
                         </div>
-                        <div :style="`width: ${User?.progress}%`"
+                        <div v-if="User?.progress! > 0" :style="`width: ${User?.progress}%`"
                             class="bg-primary rounded-3xl h-full grid place-items-center">
                             <p class="text-white font-medium text-lg">
                                 {{ User?.progress }}%
                             </p>
                         </div>
+
+                        <div v-else class="w-full h-full grid place-items-center">
+                            <p class="text-gray-500 font-medium text-lg">
+                                0%
+                            </p>
+                        </div>
                     </div>
                 </header>
 
-                <ModuleList :completed="User?.completed_modules!" :modules="Modules!" :active="User?.active_module!"
-                    :activeSection="User?.active_section!" />
+                <ModuleList :modules="Modules!" :active="User?.active_module!" :activeSection="User?.active_section!" />
             </section>
         </section>
 
         <aside v-if="!isTablet" class="bg-slate-100 col-span-2 h-full p-8 space-y-3">
             <NuxtLink class="block" to="/certificate">
-            <Card>
-                <CardHeader class="flex flex-row items-center justify-between space-y-0 pb-2">
-                    <CardTitle class="text-sm font-medium">
-                        Certificates
-                    </CardTitle>
-                    <Icon class="h-4 w-4 text-muted-foreground" name="solar:document-add-outline" />
-                </CardHeader>
-                <CardContent>
-                    <div class="text-2xl font-bold">{{ User?.number_of_certificate }}</div>
-                    <p class="text-xs text-muted-foreground">
-                        +{{ Modules?.length! - User?.number_of_certificate! }} more to complete
-                    </p>
-                </CardContent>
-            </Card>
-        </NuxtLink>
+                <Card>
+                    <CardHeader class="flex flex-row items-center justify-between space-y-0 pb-2">
+                        <CardTitle class="text-sm font-medium">
+                            Certificates
+                        </CardTitle>
+                        <Icon class="h-4 w-4 text-muted-foreground" name="solar:document-add-outline" />
+                    </CardHeader>
+                    <CardContent>
+                        <div class="text-2xl font-bold">{{ User?.number_of_certificate }}</div>
+                        <p class="text-xs text-muted-foreground">
+                            +{{ Modules?.length! - User?.number_of_certificate! }} more to complete
+                        </p>
+                    </CardContent>
+                </Card>
+            </NuxtLink>
 
             <NuxtLink class="block" to="/questions">
                 <Card>
@@ -96,7 +101,7 @@ const { data: Modules, pending: ModulesPending } = useLazyAsyncData("Modules", (
                     </CardHeader>
                     <CardContent>
                         <div class="text-2xl font-bold">{{ User?.number_of_questions }}</div>
-                        <p class="text-xs text-muted-foreground">+5 Answered</p>
+                        <p class="text-xs text-muted-foreground">+{{ User?.number_of_answered_questions }} Answered</p>
                     </CardContent>
                 </Card>
             </NuxtLink>

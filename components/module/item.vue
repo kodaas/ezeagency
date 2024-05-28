@@ -1,14 +1,16 @@
 <script setup lang="ts">
 import { Button } from "@/components/ui/button";
+import type { ClassroomModuleDto } from "~/models";
 
 const props = defineProps<{
-    id: string;
-    index: number;
-    title: string;
-    numberOfSections: number;
-    totalDuration: number;
-    status: string;
+    id: ClassroomModuleDto["id"];
+    index: ClassroomModuleDto["index"];
+    title: ClassroomModuleDto["title"];
+    number_of_sections: ClassroomModuleDto["number_of_sections"];
+    duration: ClassroomModuleDto["duration"];
+    status: "pending" | "active" | "completed";
     activeSection?: string;
+    section_id: ClassroomModuleDto["section_id"];
 }>();
 
 const redirect = () => {
@@ -17,7 +19,7 @@ const redirect = () => {
     }
 
     if (props.status === "completed") {
-        navigateTo(`/classroom?module=${props.id}`);
+        navigateTo(`/certificate/${props.section_id}`);
         return;
     }
 
@@ -68,8 +70,8 @@ const redirect = () => {
                     {{ props.title }}
                 </h4>
                 <p class="text-gray-400 text-xs">
-                    {{ props.numberOfSections }} Sections -
-                    {{ props.totalDuration }}
+                    {{ props.number_of_sections }} Sections 
+                    <!-- {{ props.duration }} -->
                 </p>
             </div>
 

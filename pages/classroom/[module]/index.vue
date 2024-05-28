@@ -3,25 +3,29 @@ const route = useRoute();
 const moduleId = computed(() => route.params.module as string);
 const progress = computed(() => {
     const completed = sections.value?.filter(
-        (section) => section.status === "completed",
+        (section) => section.status === "completed"
     ).length;
     const total = sections.value?.length;
 
     return Math.round((completed! / total!) * 100);
 });
 
+const uniqueKey = ref(Math.random())
+
 const {
     data: sections,
     execute,
     pending: pendingSection,
+    refresh: refreshSection
 } = useLazyAsyncData(
     "sections",
     () => SectionService().getSections(moduleId.value),
     {
         immediate: false,
+        watch: [uniqueKey],
         transform: (data) => {
             const activeSection = data?.find(
-                (section) => section.id === User.value?.active_section,
+                (section) => section.id === User.value?.active_section
             );
 
             return data?.map((section) => {
@@ -34,30 +38,41 @@ const {
                 return section;
             });
         },
-    },
+    }
 );
+
 
 const {
     data: User,
-    pending,
+    pending: pendingUser,
     execute: getUser,
+    refresh: refreshUser
 } = useLazyAsyncData(
     "User",
     () => {
         const data = MetaDataService().getMetaData();
         return data;
     },
-    { immediate: false },
+    { immediate: false, watch: [uniqueKey]}
 );
+
+
+const pending = computed(() => pendingSection.value && pendingUser.value);
 
 definePageMeta({
     layout: false,
 });
 
-onMounted(() => {
-    if (!route.params.section) navigateTo("/");
-    getUser();
-    execute();
+onBeforeRouteUpdate(async () => {
+    uniqueKey.value = Math.random()
+    await refreshUser()
+    await refreshSection()
+})
+
+onMounted(async () => {
+    if (!route.params.section) navigateTo(`/classroom/${route.params.module}/${User.value?.active_section}`);
+    await getUser();
+    await execute();
 });
 </script>
 
@@ -79,16 +94,12 @@ onMounted(() => {
             </div>
 
             <div class="mt-10 h-full">
-                <p>Course Sections (5)</p>
+                <p>Course Sections ({{ sections?.length }})</p>
 
-                <div v-if="!pendingSection" class="mt-5 space-y-3 h-[60vh] lg:h-[60%] overflow-y-auto">
-                    <ClassroomSectionItem v-for="section in sections" :key="section.id" v-bind="section" />
+                <div v-if="!pending" class="mt-5 space-y-3 h-[60vh] lg:h-[60%] overflow-y-auto">
+                    <ClassroomSectionItem v-for="section in sections" :key="section.id + uniqueKey" :status="section.status!"
+                        v-bind="section" />
                 </div>
-
-                <Button disabled class="mt-10 w-full">
-                    <Icon class="text-xl mr-2" name="solar:question-square-line-duotone" />
-                    Take Quiz
-                </Button>
             </div>
         </template>
     </NuxtLayout>
