@@ -1,22 +1,37 @@
 {
-  "name": "ezeagency",
-  "version": "1.0.0",
-  "description": "A training platform for insurance salespersons",
-  "main": "index.js",
-  "directories": {
-    "test": "tests"
-  },
+  "name": "nuxt-app",
+  "private": true,
+  "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "nuxt build",
+    "dev": "nuxt dev",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare"
   },
-  "author": "Kosisochukwu Obaejeogu Abasilim",
-  "license": "ISC",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/kabasilim/ezeagency.git"
+  "dependencies": {
+    "@nuxtjs/supabase": "^1.2.2",
+    "@vueuse/core": "^10.9.0",
+    "class-variance-authority": "^0.7.0",
+    "clsx": "^2.1.1",
+    "lucide-vue-next": "^0.379.0",
+    "nuxt": "^3.11.2",
+    "radix-vue": "^1.8.1",
+    "shadcn-nuxt": "^0.10.4",
+    "tailwind-merge": "^2.3.0",
+    "tailwindcss-animate": "^1.0.7",
+    "vaul-vue": "^0.1.2",
+    "vue": "^3.4.27",
+    "vue-router": "^4.3.2"
   },
-  "bugs": {
-    "url": "https://github.com/kabasilim/ezeagency/issues"
-  },
-  "homepage": "https://github.com/kabasilim/ezeagency#readme"
+  "devDependencies": {
+    "@nuxtjs/color-mode": "^3.4.1",
+    "@nuxtjs/device": "^3.1.1",
+    "@nuxtjs/tailwindcss": "^6.12.0",
+    "@tailwindcss/typography": "^0.5.13",
+    "@vueuse/nuxt": "^10.9.0",
+    "nuxt-icon": "^0.6.10",
+    "typescript": "^5.4.5",
+    "video.js": "^8.12.0"
+  }
 }
