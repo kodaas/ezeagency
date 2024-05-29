@@ -11,6 +11,8 @@
   },
   "dependencies": {
     "@nuxtjs/supabase": "^1.2.2",
+    "@unovis/ts": "^1.4.1",
+    "@unovis/vue": "^1.4.1",
     "@vueuse/core": "^10.9.0",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",

@@ -149,7 +149,7 @@ onMounted(async () => {
                         </NuxtLink>
 
                         <NuxtLink
-                            to="/users"
+                            to="/admin/users"
                             activeClass="text-foreground"
                             class="hover:text-foreground"
                         >
@@ -225,8 +225,7 @@ onMounted(async () => {
                                 />
                                 <p v-if="!isLoading">Logout</p>
                             </Button>
-                            </DropdownMenuItem
-                        >
+                        </DropdownMenuItem>
                     </DropdownMenuContent>
                 </DropdownMenu>
             </div>

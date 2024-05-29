@@ -125,13 +125,7 @@ import {
                                         </TableRow>
                                     </TableHeader>
                                     <TableBody>
-                                        <TableRow
-                                            @click="
-                                                navigateTo('/admin/users/test')
-                                            "
-                                            class="cursor-pointer"
-                                            
-                                        >
+                                        <TableRow class="cursor-pointer">
                                             <TableCell
                                                 class="hidden sm:table-cell"
                                             >
@@ -145,7 +139,14 @@ import {
                                                     />
                                                 </div>
                                             </TableCell>
-                                            <TableCell class="font-medium">
+                                            <TableCell
+                                                @click="
+                                                    navigateTo(
+                                                        '/admin/users/test',
+                                                    )
+                                                "
+                                                class="font-medium"
+                                            >
                                                 Laser Lemonade Machine
                                             </TableCell>
                                             <TableCell>
