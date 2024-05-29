@@ -5,7 +5,6 @@ const { toast } = useToast();
 const getVideo = async (section_id: string): Promise<VideoDto | null> => {
   const supabase = useSupabaseClient();
   try {
-    console.log("section_id", section_id);
     const { data, error } = await supabase
       .from("Video")
       .select("*")

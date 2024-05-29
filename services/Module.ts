@@ -61,32 +61,19 @@ const getModule = async (module_id: string): Promise<ClassroomModuleDto | null> 
 };
 
 const getNextModule = async (module_id: string): Promise<ClassroomModuleDto | null> => {
-  const supabase = useSupabaseClient();
-  try {
-    const modules = await getModules();
+  if (Modules.value) {
+    const activeModule = Modules.value.find((module: ClassroomModuleDto) => module.id === module_id);
 
-    if (!modules) {
-      return null;
-    }
-
-    const activeModule = modules.find((module) => module.id === module_id);
-
-    const nextModule = modules.find((module) => module.index === (activeModule?.index! + 1))
-
-    if (!nextModule) {
-      return null;
-    }
+    const nextModule = Modules.value.find((module: ClassroomModuleDto) => module.index === (activeModule?.index! + 1))
 
     return nextModule
-
-  } catch (error: any) {
+  } else {
     toast({
       title: "Error",
-      description: error.message,
+      description: "No modules found",
       variant: "destructive",
-    });
-
-    return null;
+    })
+    return null
   }
 }
 

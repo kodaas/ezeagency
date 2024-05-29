@@ -2,7 +2,8 @@
 import videojs from "video.js";
 import "video.js/dist/video-js.css";
 import { useIntervalFn } from '@vueuse/core'
-import type { ClassroomSectionDto } from "~/models";
+import { useToast } from "@/components/ui/toast/use-toast";
+const { toast } = useToast()
 
 
 const props = defineProps<{
@@ -11,7 +12,7 @@ const props = defineProps<{
     activeSectionStatus: 'pending' | 'active' | 'completed',
 }>();
 
-const emit = defineEmits(["videoEnded"]);
+const emit = defineEmits(["videoEnded","updateTimestamp"]);
 
 const player = ref<any>(null);
 const videoPlayerRef = ref<any>(null);
@@ -24,6 +25,7 @@ const InitializePlayer = () => {
     });
 
     const { pause } = useIntervalFn(() => {
+        emit("updateTimestamp", player.value.currentTime());
         currentTime.value = player.value.currentTime();
     }, 5000)
 
@@ -35,8 +37,16 @@ const InitializePlayer = () => {
     player.value.on("seeking", (e: any) => {
         e.preventDefault();
 
-        if (player.value.currentTime() > currentTime.value && props.active_section_status !== "completed")
+        console.log(props.activeSectionStatus)
+
+        if (player.value.currentTime() > currentTime.value && props.activeSectionStatus !== "completed"){
             player.value.currentTime(currentTime.value);
+            toast({
+                title: "Opps! 🤭, You can't skip,",
+                description: "You have to fully complete this section",
+                variant: "info",
+            })
+        }
     });
 
     player.value.on("play", (e: any) => {
