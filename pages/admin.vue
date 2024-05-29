@@ -83,7 +83,7 @@ onMounted(async () => {
             class="sticky top-0 flex h-16 items-center gap-4 border-b bg-background px-4 md:px-6"
         >
             <nav
-                class="hidden flex-col gap-6 text-lg font-medium md:flex md:flex-row md:items-center md:gap-5 md:text-sm lg:gap-6"
+                class="hidden text-muted-foreground flex-col gap-6 text-lg font-medium md:flex md:flex-row md:items-center md:gap-5 md:text-sm lg:gap-6"
             >
                 <a
                     href="#"
@@ -94,36 +94,29 @@ onMounted(async () => {
                     </div>
                     <span class="sr-only">Acme Inc</span>
                 </a>
-                <a
-                    href="#"
-                    class="text-foreground transition-colors hover:text-foreground"
+                <NuxtLink
+                    to="/admin"
+                    activeClass="text-foreground"
+                    class="hover:text-foreground"
                 >
                     Dashboard
-                </a>
-                <a
-                    href="#"
-                    class="text-muted-foreground transition-colors hover:text-foreground"
+                </NuxtLink>
+
+                <NuxtLink
+                    to="/admin/users"
+                    activeClass="text-foreground"
+                    class="hover:text-foreground"
                 >
-                    Orders
-                </a>
-                <a
-                    href="#"
-                    class="text-muted-foreground transition-colors hover:text-foreground"
+                    Users
+                </NuxtLink>
+
+                <NuxtLink
+                    to="/admin/settings"
+                    activeClass="text-foreground"
+                    class="hover:text-foreground"
                 >
-                    Products
-                </a>
-                <a
-                    href="#"
-                    class="text-muted-foreground transition-colors hover:text-foreground"
-                >
-                    Customers
-                </a>
-                <a
-                    href="#"
-                    class="text-muted-foreground transition-colors hover:text-foreground"
-                >
-                    Analytics
-                </a>
+                    Settings
+                </NuxtLink>
             </nav>
             <Sheet>
                 <SheetTrigger as-child>
@@ -137,7 +130,9 @@ onMounted(async () => {
                     </Button>
                 </SheetTrigger>
                 <SheetContent side="left">
-                    <nav class="grid gap-6 text-lg font-medium">
+                    <nav
+                        class="grid text-muted-foreground gap-6 text-lg font-medium"
+                    >
                         <a
                             href="#"
                             class="flex items-center gap-2 text-lg font-semibold"
@@ -145,33 +140,29 @@ onMounted(async () => {
                             <Package2 class="h-6 w-6" />
                             <span class="sr-only">Acme Inc</span>
                         </a>
-                        <a href="#" class="hover:text-foreground">
+                        <NuxtLink
+                            to="/admin"
+                            activeClass="text-foreground"
+                            class="hover:text-foreground"
+                        >
                             Dashboard
-                        </a>
-                        <a
-                            href="#"
-                            class="text-muted-foreground hover:text-foreground"
+                        </NuxtLink>
+
+                        <NuxtLink
+                            to="/users"
+                            activeClass="text-foreground"
+                            class="hover:text-foreground"
                         >
-                            Orders
-                        </a>
-                        <a
-                            href="#"
-                            class="text-muted-foreground hover:text-foreground"
+                            Users
+                        </NuxtLink>
+
+                        <NuxtLink
+                            to="/admin/settings"
+                            activeClass="text-foreground"
+                            class="hover:text-foreground"
                         >
-                            Products
-                        </a>
-                        <a
-                            href="#"
-                            class="text-muted-foreground hover:text-foreground"
-                        >
-                            Customers
-                        </a>
-                        <a
-                            href="#"
-                            class="text-muted-foreground hover:text-foreground"
-                        >
-                            Analytics
-                        </a>
+                            Settings
+                        </NuxtLink>
                     </nav>
                 </SheetContent>
             </Sheet>
@@ -211,7 +202,9 @@ onMounted(async () => {
                     </DropdownMenuTrigger>
                     <DropdownMenuContent align="end">
                         <DropdownMenuSeparator />
-                        <DropdownMenuItem>Settings</DropdownMenuItem>
+                        <DropdownMenuItem>
+                            <NuxtLink to="/admin/settings">Settings</NuxtLink>
+                        </DropdownMenuItem>
                         <DropdownMenuSeparator />
                         <DropdownMenuItem
                             ><Button
@@ -231,13 +224,14 @@ onMounted(async () => {
                                     name="solar:logout-3-line-duotone"
                                 />
                                 <p v-if="!isLoading">Logout</p>
-                            </Button></DropdownMenuItem
+                            </Button>
+                            </DropdownMenuItem
                         >
                     </DropdownMenuContent>
                 </DropdownMenu>
             </div>
         </header>
-        
+
         <NuxtPage />
     </div>
 </template>
