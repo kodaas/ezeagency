@@ -81,11 +81,7 @@ const onSubmit = async () => {
 
     // Create Supabase User Role
 
-    const { data, error } = await supabase
-        .from('User')
-        .insert([{}])
-        .select();
-
+    const { data, error } = await supabase.from("User").insert([{}]).select();
 
     if (error) {
         toast({
@@ -97,7 +93,7 @@ const onSubmit = async () => {
         return;
     }
 
-    console.log(data)
+    console.log(data);
 
     toast({
         title: "Account created",
@@ -124,29 +120,57 @@ const onSubmit = async () => {
                 <div class="grid grid-cols-2 gap-4">
                     <div class="grid gap-2">
                         <Label for="first-name">First name</Label>
-                        <Input v-model="form.firstName" :disabled="isLoading" id="first-name" placeholder="Max"
-                            required />
+                        <Input
+                            v-model="form.firstName"
+                            :disabled="isLoading"
+                            id="first-name"
+                            placeholder="Max"
+                            required
+                        />
                     </div>
                     <div class="grid gap-2">
                         <Label for="last-name">Last name</Label>
-                        <Input v-model="form.lastName" :disabled="isLoading" id="last-name" placeholder="Robinson"
-                            required />
+                        <Input
+                            v-model="form.lastName"
+                            :disabled="isLoading"
+                            id="last-name"
+                            placeholder="Robinson"
+                            required
+                        />
                     </div>
                 </div>
                 <div class="grid gap-2">
                     <Label for="email">Email</Label>
-                    <Input v-model="form.email" :disabled="isLoading" id="email" type="email"
-                        placeholder="m@example.com" required />
+                    <Input
+                        v-model="form.email"
+                        :disabled="isLoading"
+                        id="email"
+                        type="email"
+                        placeholder="m@example.com"
+                        required
+                    />
                 </div>
                 <div class="grid gap-2">
                     <Label for="phone">Phone Number</Label>
-                    <Input v-model="form.phone" :disabled="isLoading" id="phone" type="text" placeholder="07012345678"
-                        required />
+                    <Input
+                        v-model="form.phone"
+                        :disabled="isLoading"
+                        id="phone"
+                        type="text"
+                        placeholder="07012345678"
+                        required
+                    />
                 </div>
                 <div class="grid gap-2">
                     <Label for="password">Password</Label>
-                    <Input v-model="form.password" :disabled="isLoading" id="password" type="password"
-                        placeholder="****" required />
+                    <Input
+                        v-model="form.password"
+                        :disabled="isLoading"
+                        id="password"
+                        type="password"
+                        placeholder="****"
+                        required
+                    />
                 </div>
                 <Button :disabled="isLoading" type="submit" class="w-full">
                     <Icon v-if="isLoading" name="svg-spinners:ring-resize" />
