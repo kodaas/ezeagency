@@ -119,7 +119,7 @@ import {
                                             <TableHead
                                                 class="hidden md:table-cell"
                                             >
-                                                Created at
+                                                Number of Sections
                                             </TableHead>
                                             <TableHead>
                                                 <span class="sr-only"
@@ -157,7 +157,7 @@ import {
                                             <TableCell
                                                 class="hidden md:table-cell"
                                             >
-                                                2023-07-12 10:42 AM
+                                                4
                                             </TableCell>
                                             <TableCell>
                                                 <DropdownMenu>
@@ -188,7 +188,7 @@ import {
                                                         <DropdownMenuItem
                                                             @click="
                                                                 navigateTo(
-                                                                    '/admin/users/test',
+                                                                    '/admin/modules/test',
                                                                 )
                                                             "
                                                             >Edit</DropdownMenuItem

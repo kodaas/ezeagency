@@ -60,7 +60,7 @@ const logout = async () => {
     });
 
     navigateTo("/auth/login");
-    window.location.reload();
+    window.location.replace(window.location.origin);
 };
 
 onMounted(async () => {
@@ -209,7 +209,7 @@ onMounted(async () => {
                             >
                                 <img
                                     class="w-full"
-                                    :src="`https://ui-avatars.com/api/?name=${user?.user_metadata.first_name}+${user?.user_metadata.last_name}&background=877D7D&color=fff&size=30`"
+                                    :src="`https://ui-avatars.com/api/?name=${user?.user_metadata.first_name}+${user?.user_metadata.last_name}&background=877D7D&color=fff&size=100`"
                                     alt="Profile"
                                 />
                             </div>

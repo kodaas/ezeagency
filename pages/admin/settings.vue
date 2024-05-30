@@ -48,7 +48,7 @@ const logout = async () => {
     });
 
     navigateTo("/auth/login");
-    window.location.reload();
+    window.location.replace(window.location.origin);
 };
 </script>
 

@@ -101,7 +101,7 @@ import {
                                                 <span class="sr-only">img</span>
                                             </TableHead>
                                             <TableHead>Name</TableHead>
-                                            <TableHead>Status</TableHead>
+                                            <TableHead>Email</TableHead>
                                             <TableHead
                                                 class="hidden md:table-cell"
                                             >
@@ -110,12 +110,12 @@ import {
                                             <TableHead
                                                 class="hidden md:table-cell"
                                             >
-                                                Total Sales
+                                                Status
                                             </TableHead>
                                             <TableHead
                                                 class="hidden md:table-cell"
                                             >
-                                                Created at
+                                                Approve
                                             </TableHead>
                                             <TableHead>
                                                 <span class="sr-only"
@@ -125,7 +125,7 @@ import {
                                         </TableRow>
                                     </TableHeader>
                                     <TableBody>
-                                        <TableRow class="cursor-pointer">
+                                        <TableRow>
                                             <TableCell
                                                 class="hidden sm:table-cell"
                                             >
@@ -134,18 +134,20 @@ import {
                                                 >
                                                     <img
                                                         class="w-full"
-                                                        :src="`https://ui-avatars.com/api/?name=${user?.user_metadata.first_name}+${user?.user_metadata.last_name}&background=877D7D&color=fff&size=30`"
+                                                        :src="`https://ui-avatars.com/api/?name=John+Doe&background=877D7D&color=fff&size=100`"
                                                         alt="Profile"
                                                     />
                                                 </div>
                                             </TableCell>
                                             <TableCell class="font-medium">
-                                                Laser Lemonade Machine
+                                                John Doe
                                             </TableCell>
-                                            <TableCell>
-                                                <Badge variant="outline">
-                                                    Draft
-                                                </Badge>
+                                            <TableCell class="hover:underline">
+                                                <a
+                                                    href="mailto:johdoe@gmail.com"
+                                                    class="text-blue-700"
+                                                    >johdoe@gmail.com</a
+                                                >
                                             </TableCell>
                                             <TableCell
                                                 class="hidden md:table-cell"
@@ -155,12 +157,19 @@ import {
                                             <TableCell
                                                 class="hidden md:table-cell"
                                             >
-                                                25
+                                                <Badge
+                                                    variant="warning"
+                                                    class="ml-auto sm:ml-0"
+                                                >
+                                                    unapproved
+                                                </Badge>
                                             </TableCell>
                                             <TableCell
                                                 class="hidden md:table-cell"
                                             >
-                                                2023-07-12 10:42 AM
+                                                <Button size="sm">
+                                                    Approve Account
+                                                </Button>
                                             </TableCell>
                                             <TableCell>
                                                 <DropdownMenu>

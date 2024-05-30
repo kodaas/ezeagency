@@ -95,9 +95,21 @@ import {
                         >
                             John Doe
                         </h1>
-                        <Badge variant="outline" class="ml-auto sm:ml-0">
-                            user
+                        <!-- <Badge variant="success" class="ml-auto sm:ml-0">
+                            active
+                        </Badge> -->
+                        <Badge variant="warning" class="ml-auto sm:ml-0">
+                            unapproved
                         </Badge>
+                        <div
+                            class="hidden items-center gap-2 md:ml-auto md:flex"
+                        >
+                            <!-- <Button variant="destructive" size="sm">
+                                Disapprove Account
+                            </Button> -->
+
+                            <Button size="sm"> Approve Account </Button>
+                        </div>
                     </div>
                     <div
                         class="grid gap-4 md:grid-cols-[1fr_250px] lg:grid-cols-3 lg:gap-8"
@@ -114,26 +126,93 @@ import {
                                     </CardDescription>
                                 </CardHeader>
                                 <CardContent>
-                                    <div class="grid gap-6">
-                                        <div class="grid gap-3">
-                                            <Label for="name">Name</Label>
-                                            <Input
-                                                id="name"
-                                                type="text"
-                                                class="w-full"
-                                                default-value="Gamer Gear Pro Controller"
-                                            />
-                                        </div>
-                                        <div class="grid gap-3">
-                                            <Label for="description"
-                                                >Description</Label
+                                    <div class="flow-root">
+                                        <dl
+                                            class="-my-3 divide-y divide-gray-100 text-sm"
+                                        >
+                                            <div
+                                                class="grid grid-cols-1 gap-1 py-3 even:bg-gray-50 sm:grid-cols-3 sm:gap-4"
                                             >
-                                            <Textarea
-                                                id="description"
-                                                default-value="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam auctor, nisl nec ultricies ultricies, nunc nisl ultricies nunc, nec ultricies nunc nisl nec nunc."
-                                                class="min-h-32"
-                                            />
-                                        </div>
+                                                <dt
+                                                    class="font-medium text-gray-900"
+                                                >
+                                                    Title
+                                                </dt>
+                                                <dd
+                                                    class="text-gray-700 sm:col-span-2"
+                                                >
+                                                    Mr
+                                                </dd>
+                                            </div>
+
+                                            <div
+                                                class="grid grid-cols-1 gap-1 py-3 even:bg-gray-50 sm:grid-cols-3 sm:gap-4"
+                                            >
+                                                <dt
+                                                    class="font-medium text-gray-900"
+                                                >
+                                                    Name
+                                                </dt>
+                                                <dd
+                                                    class="text-gray-700 sm:col-span-2"
+                                                >
+                                                    John Frusciante
+                                                </dd>
+                                            </div>
+
+                                            <div
+                                                class="grid grid-cols-1 gap-1 py-3 even:bg-gray-50 sm:grid-cols-3 sm:gap-4"
+                                            >
+                                                <dt
+                                                    class="font-medium text-gray-900"
+                                                >
+                                                    Occupation
+                                                </dt>
+                                                <dd
+                                                    class="text-gray-700 sm:col-span-2"
+                                                >
+                                                    Guitarist
+                                                </dd>
+                                            </div>
+
+                                            <div
+                                                class="grid grid-cols-1 gap-1 py-3 even:bg-gray-50 sm:grid-cols-3 sm:gap-4"
+                                            >
+                                                <dt
+                                                    class="font-medium text-gray-900"
+                                                >
+                                                    Salary
+                                                </dt>
+                                                <dd
+                                                    class="text-gray-700 sm:col-span-2"
+                                                >
+                                                    $1,000,000+
+                                                </dd>
+                                            </div>
+
+                                            <div
+                                                class="grid grid-cols-1 gap-1 py-3 even:bg-gray-50 sm:grid-cols-3 sm:gap-4"
+                                            >
+                                                <dt
+                                                    class="font-medium text-gray-900"
+                                                >
+                                                    Bio
+                                                </dt>
+                                                <dd
+                                                    class="text-gray-700 sm:col-span-2"
+                                                >
+                                                    Lorem ipsum dolor, sit amet
+                                                    consectetur adipisicing
+                                                    elit. Et facilis debitis
+                                                    explicabo doloremque impedit
+                                                    nesciunt dolorem facere,
+                                                    dolor quasi veritatis quia
+                                                    fugit aperiam aspernatur
+                                                    neque molestiae labore
+                                                    aliquam soluta architecto?
+                                                </dd>
+                                            </div>
+                                        </dl>
                                     </div>
                                 </CardContent>
                             </Card>
