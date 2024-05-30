@@ -254,7 +254,7 @@ import {
                                 <CardContent>
                                     <div />
 
-                                    <Dialog>
+                                    <Dialog v-if="!isTablet">
                                         <DialogTrigger>
                                             <Button
                                                 size="sm"

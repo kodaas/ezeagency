@@ -89,9 +89,9 @@ onMounted(async () => {
                     href="#"
                     class="flex items-center gap-2 text-lg font-semibold md:text-base"
                 >
-                    <div class="w-8">
+                    <NuxtLink to="/admin" class="w-8">
                         <Logo class="w-full" />
-                    </div>
+                    </NuxtLink>
                     <span class="sr-only">Acme Inc</span>
                 </a>
                 <NuxtLink
@@ -108,6 +108,14 @@ onMounted(async () => {
                     class="hover:text-foreground"
                 >
                     Users
+                </NuxtLink>
+
+                <NuxtLink
+                    to="/admin/modules"
+                    activeClass="text-foreground"
+                    class="hover:text-foreground"
+                >
+                    Modules
                 </NuxtLink>
 
                 <NuxtLink
@@ -154,6 +162,14 @@ onMounted(async () => {
                             class="hover:text-foreground"
                         >
                             Users
+                        </NuxtLink>
+
+                        <NuxtLink
+                            to="/admin/modules"
+                            activeClass="text-foreground"
+                            class="hover:text-foreground"
+                        >
+                            Modules
                         </NuxtLink>
 
                         <NuxtLink

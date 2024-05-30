@@ -80,37 +80,41 @@ import {
                                 Archived
                             </TabsTrigger>
                         </TabsList>
-                        <div class="ml-auto flex items-center gap-2"></div>
+                        <div class="ml-auto flex items-center gap-2">
+                            <Button size="sm" class="h-7 gap-1">
+                                <PlusCircle class="h-3.5 w-3.5" />
+                                <span
+                                    class="sm:not-sr-only sm:whitespace-nowrap"
+                                >
+                                    Add Product
+                                </span>
+                            </Button>
+                        </div>
                     </div>
                     <TabsContent value="all">
                         <Card>
                             <CardHeader>
-                                <CardTitle>Users</CardTitle>
+                                <CardTitle>Modules</CardTitle>
                                 <CardDescription>
-                                    Manage your users and view their progress
-                                    and performance.
+                                    Manage course modules here.
                                 </CardDescription>
                             </CardHeader>
                             <CardContent>
                                 <Table>
                                     <TableHeader>
                                         <TableRow>
-                                            <TableHead
-                                                class="hidden w-[100px] sm:table-cell"
-                                            >
-                                                <span class="sr-only">img</span>
-                                            </TableHead>
-                                            <TableHead>Name</TableHead>
+                                            <TableHead>Index</TableHead>
+                                            <TableHead>Title</TableHead>
                                             <TableHead>Status</TableHead>
                                             <TableHead
                                                 class="hidden md:table-cell"
                                             >
-                                                Price
+                                                Duration
                                             </TableHead>
                                             <TableHead
                                                 class="hidden md:table-cell"
                                             >
-                                                Total Sales
+                                                Quiz Url
                                             </TableHead>
                                             <TableHead
                                                 class="hidden md:table-cell"
@@ -125,37 +129,30 @@ import {
                                         </TableRow>
                                     </TableHeader>
                                     <TableBody>
-                                        <TableRow class="cursor-pointer">
-                                            <TableCell
-                                                class="hidden sm:table-cell"
-                                            >
-                                                <div
-                                                    class="w-16 rounded-2xl overflow-hidden inline-block"
-                                                >
-                                                    <img
-                                                        class="w-full"
-                                                        :src="`https://ui-avatars.com/api/?name=${user?.user_metadata.first_name}+${user?.user_metadata.last_name}&background=877D7D&color=fff&size=30`"
-                                                        alt="Profile"
-                                                    />
-                                                </div>
-                                            </TableCell>
+                                        <TableRow>
+                                            <TableCell> # 1 </TableCell>
                                             <TableCell class="font-medium">
-                                                Laser Lemonade Machine
+                                                Insurance Advantages and
+                                                Disadvantages
                                             </TableCell>
                                             <TableCell>
-                                                <Badge variant="outline">
-                                                    Draft
+                                                <Badge variant="success">
+                                                    active
                                                 </Badge>
                                             </TableCell>
                                             <TableCell
                                                 class="hidden md:table-cell"
                                             >
-                                                $499.99
+                                                4m 5s
                                             </TableCell>
                                             <TableCell
                                                 class="hidden md:table-cell"
                                             >
-                                                25
+                                                <a
+                                                    href="https://www.typeform.com/quizzes/"
+                                                    target="_blank"
+                                                    >https://www.typeform.com/quizzes/</a
+                                                >
                                             </TableCell>
                                             <TableCell
                                                 class="hidden md:table-cell"
