@@ -14,7 +14,7 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
       .single();
 
     if (!metaData) {
-      // await supabase.auth.signOut();
+      await supabase.auth.signOut();
       return navigateTo("/");
     }
 

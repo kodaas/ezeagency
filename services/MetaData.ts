@@ -74,9 +74,44 @@ const updateMetaData = async (update: any): Promise<MetaDataDto | null> => {
     }
 }
 
+const getAllMetaData = async (): Promise<MetaDataDto[] | null> => {
+
+    const supabase = useSupabaseClient();
+    const user = useSupabaseUser();
+
+    // @ts-ignore
+    if (!user.value && user.value?.role === "admin") {
+        return null;
+    }
+
+    try {
+        const { data, error } = await supabase
+            .from("User")
+            .select("*");
+
+        if (error) {
+            throw error
+        }
+
+        return data
+
+    } catch (error: any) {
+
+        toast({
+            title: "Error",
+            description: error.message,
+            variant: "destructive",
+        });
+
+        return null
+    }
+
+}
+
 export const MetaDataService = () => {
     return {
         getMetaData,
-        updateMetaData
+        updateMetaData,
+        getAllMetaData
     }
 }

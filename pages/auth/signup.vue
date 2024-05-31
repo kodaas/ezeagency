@@ -69,19 +69,13 @@ const onSubmit = async () => {
         return;
     }
 
-    //     active_module: string;
-    //     active_section: string;
-    //     completed_modules: string[]; // Assuming it's an array of strings (module IDs)
-    //     created_at: string; // ISO 8601 date-time format
-    //     id: string;
-    //     progress: number;
-    //     video_timestamp: number;
-    //     number_of_questions: number;
-    //     number_of_certificate: number;
-
-    // Create Supabase User Role
-
-    const { data, error } = await supabase.from("User").insert([{}]).select();
+    const { data, error } = await supabase.from("User").insert([{
+        first_name: form.value.firstName,
+        last_name: form.value.lastName,
+        email: form.value.email,
+        phone: form.value.phone,
+        role: Roles.USER
+    }]).select();
 
     if (error) {
         toast({

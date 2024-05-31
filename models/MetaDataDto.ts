@@ -1,3 +1,5 @@
+import type { Roles } from "./Roles";
+
 export interface MetaDataDto {
   active_module: string;
   active_section: string;
@@ -10,4 +12,9 @@ export interface MetaDataDto {
   number_of_completed_modules: number;
   number_of_answered_questions: number;
   is_active: boolean;
+  first_name: string;
+  last_name: string;
+  email: string;
+  phone: string;
+  role: Roles;
 }

@@ -11,15 +11,6 @@ const supabase = useSupabaseClient();
 const { toast } = useToast();
 const isLoading = ref(false);
 
-const requestAproval = () => {
-    toast({
-        title: "Request Sent",
-        description:
-            "Your request has been sent successfully!, we will get back to you soon.",
-        variant: "info",
-    });
-};
-
 const logout = async () => {
     isLoading.value = true;
     const { error } = await supabase.auth.signOut();
@@ -88,8 +79,6 @@ const logout = async () => {
             <p class="mt-4 text-gray-500">Your needs aproval to continue</p>
 
             <div class="space-x-8 mt-5">
-                <Button @click="requestAproval()">Request Approval</Button>
-
                 <Button @click="logout()" variant="outline">
                     <Icon v-if="isLoading" name="svg-spinners:ring-resize" />
 
