@@ -64,29 +64,22 @@ import {
 <template>
     <div class="flex min-h-screen w-full flex-col bg-muted/40">
         <div class="flex flex-col sm:gap-4 sm:py-4 sm:pl-14">
-            <main
-                class="grid flex-1 items-start gap-4 p-4 sm:px-6 sm:py-0 md:gap-8"
-            >
+            <main class="grid flex-1 items-start gap-4 p-4 sm:px-6 sm:py-0 md:gap-8">
                 <Tabs default-value="all">
                     <div class="flex items-center">
                         <TabsList>
                             <TabsTrigger value="all"> All </TabsTrigger>
-                            <TabsTrigger value="active"> Active </TabsTrigger>
+                            <TabsTrigger value="active"> Available </TabsTrigger>
                             <TabsTrigger value="draft"> Draft </TabsTrigger>
-                            <TabsTrigger
-                                value="archived"
-                                class="hidden sm:flex"
-                            >
-                                Archived
+                            <TabsTrigger value="archived" class="hidden sm:flex">
+                                Unavailable
                             </TabsTrigger>
                         </TabsList>
                         <div class="ml-auto flex items-center gap-2">
                             <Button size="sm" class="h-7 gap-1">
                                 <PlusCircle class="h-3.5 w-3.5" />
-                                <span
-                                    class="sm:not-sr-only sm:whitespace-nowrap"
-                                >
-                                    Add Product
+                                <span class="sm:not-sr-only sm:whitespace-nowrap">
+                                    Create Module
                                 </span>
                             </Button>
                         </div>
@@ -106,25 +99,17 @@ import {
                                             <TableHead>Index</TableHead>
                                             <TableHead>Title</TableHead>
                                             <TableHead>Status</TableHead>
-                                            <TableHead
-                                                class="hidden md:table-cell"
-                                            >
+                                            <TableHead class="hidden md:table-cell">
                                                 Duration
                                             </TableHead>
-                                            <TableHead
-                                                class="hidden md:table-cell"
-                                            >
+                                            <TableHead class="hidden md:table-cell">
                                                 Quiz Url
                                             </TableHead>
-                                            <TableHead
-                                                class="hidden md:table-cell"
-                                            >
+                                            <TableHead class="hidden md:table-cell">
                                                 Number of Sections
                                             </TableHead>
                                             <TableHead>
-                                                <span class="sr-only"
-                                                    >Actions</span
-                                                >
+                                                <span class="sr-only">Actions</span>
                                             </TableHead>
                                         </TableRow>
                                     </TableHeader>
@@ -137,62 +122,36 @@ import {
                                             </TableCell>
                                             <TableCell>
                                                 <Badge variant="success">
-                                                    active
+                                                    available
                                                 </Badge>
                                             </TableCell>
-                                            <TableCell
-                                                class="hidden md:table-cell"
-                                            >
+                                            <TableCell class="hidden md:table-cell">
                                                 4m 5s
                                             </TableCell>
-                                            <TableCell
-                                                class="hidden md:table-cell"
-                                            >
-                                                <a
-                                                    href="https://www.typeform.com/quizzes/"
-                                                    target="_blank"
-                                                    >https://www.typeform.com/quizzes/</a
-                                                >
+                                            <TableCell class="hidden md:table-cell">
+                                                <Anchor target="_blank" href="https://www.typeform.com/quizzes/">
+                                                    https://www.typeform.com/quizzes/
+                                                </Anchor>
                                             </TableCell>
-                                            <TableCell
-                                                class="hidden md:table-cell"
-                                            >
+                                            <TableCell class="hidden md:table-cell">
                                                 4
                                             </TableCell>
                                             <TableCell>
                                                 <DropdownMenu>
-                                                    <DropdownMenuTrigger
-                                                        as-child
-                                                    >
-                                                        <Button
-                                                            aria-haspopup="true"
-                                                            size="icon"
-                                                            variant="ghost"
-                                                        >
-                                                            <MoreHorizontal
-                                                                class="h-4 w-4"
-                                                            />
-                                                            <span
-                                                                class="sr-only"
-                                                                >Toggle
-                                                                menu</span
-                                                            >
+                                                    <DropdownMenuTrigger as-child>
+                                                        <Button aria-haspopup="true" size="icon" variant="ghost">
+                                                            <MoreHorizontal class="h-4 w-4" />
+                                                            <span class="sr-only">Toggle
+                                                                menu</span>
                                                         </Button>
                                                     </DropdownMenuTrigger>
-                                                    <DropdownMenuContent
-                                                        align="end"
-                                                    >
-                                                        <DropdownMenuLabel
-                                                            >Actions</DropdownMenuLabel
-                                                        >
-                                                        <DropdownMenuItem
-                                                            @click="
-                                                                navigateTo(
-                                                                    '/admin/modules/test',
-                                                                )
-                                                            "
-                                                            >Edit</DropdownMenuItem
-                                                        >
+                                                    <DropdownMenuContent align="end">
+                                                        <DropdownMenuLabel>Actions</DropdownMenuLabel>
+                                                        <DropdownMenuItem @click="
+                                                            navigateTo(
+                                                                '/admin/modules/test',
+                                                            )
+                                                            ">Edit</DropdownMenuItem>
                                                     </DropdownMenuContent>
                                                 </DropdownMenu>
                                             </TableCell>

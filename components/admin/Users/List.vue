@@ -90,7 +90,7 @@ const updateUser = async (update: any, id: string) => {
                         </TableCell>
                         <TableCell class="font-medium"> {{ user.first_name }} {{ user.last_name }} </TableCell>
                         <TableCell class="hover:underline">
-                            <a :href="`mailto:${user.email}`" class="text-blue-700">{{ user.email }}</a>
+                            <Anchor target="_blank" :href="`mailto:${user.email}`">{{ user.email }}</Anchor>
                         </TableCell>
                         <TableCell class="hidden md:table-cell">
                             {{ user.phone }}

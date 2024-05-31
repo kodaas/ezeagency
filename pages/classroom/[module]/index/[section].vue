@@ -4,7 +4,6 @@ import { useMediaQuery } from "@vueuse/core";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/toast/use-toast";
-import type { ClassroomModuleDto } from "~/models";
 
 definePageMeta({
     layout: false,
@@ -57,10 +56,13 @@ const {
 const pending = ref(true);
 
 const videoEnded = ($event: number) => {
+    const activeModule = modules.value?.find((module) => module.id === User.value?.active_module)
+    const moduleProgress =  (activeSection.value?.index! / activeModule?.number_of_sections!) * 100;
     const { data, error } = useAsyncData("VideoEnded", () =>
         MetaDataService().updateMetaData({
-            video_timestamp: Number($event),
+            video_timestamp: 0,
             active_section: videoData.value?.next_section_id,
+            active_module_progress: moduleProgress
         }),
     );
 
@@ -111,6 +113,7 @@ const nextModule = async () => {
                 progress: (totalCompleted / totalModule) * 100,
                 number_of_completed_modules: totalCompleted,
                 number_of_certificate: User.value?.number_of_certificate! + 1,
+                active_module_progress: 0
             }),
     );
 

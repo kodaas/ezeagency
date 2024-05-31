@@ -11,6 +11,7 @@ export interface MetaDataDto {
   number_of_certificate: number;
   number_of_completed_modules: number;
   number_of_answered_questions: number;
+  active_module_progress: number;
   is_active: boolean;
   first_name: string;
   last_name: string;

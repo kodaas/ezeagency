@@ -243,7 +243,7 @@ onMounted(async () => {
                       <div class="grid grid-cols-1 gap-1 py-3 even:bg-gray-50 sm:grid-cols-3 sm:gap-4">
                         <dt class="font-medium text-gray-900">Email</dt>
                         <dd class="text-gray-700 sm:col-span-2">
-                          {{ userData?.email }}
+                          <Anchor target="_blank" :href="`mailto:${userData?.email}`">{{ userData?.email }}</Anchor>
                         </dd>
                       </div>
 
@@ -316,7 +316,7 @@ onMounted(async () => {
                           <Badge v-if="module.status === 'pending'" variant="warning"> pending </Badge>
                         </TableCell>
                         <TableCell>
-                          <Progress v-if="module.status === 'active'" :model-value="33" />
+                          <Progress v-if="module.status === 'active'" :model-value="userData?.active_module_progress" />
                           <p v-else-if="module.status === 'completed'"> 100% </p>
                           <p v-else> 0% </p>
                         </TableCell>

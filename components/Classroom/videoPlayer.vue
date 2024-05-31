@@ -16,7 +16,7 @@ const emit = defineEmits(["videoEnded","updateTimestamp"]);
 
 const player = ref<any>(null);
 const videoPlayerRef = ref<any>(null);
-const currentTime = ref<number>(632);
+const currentTime = ref<number>(634);
 const isPlayerDirty = ref<boolean>(false);
 
 const InitializePlayer = () => {
