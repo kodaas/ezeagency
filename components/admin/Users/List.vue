@@ -6,12 +6,42 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle, 
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow, } from "@/components/ui/table";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger, } from "@/components/ui/tooltip";
 import { Roles, type MetaDataDto } from "~/models";
+import { useToast } from "@/components/ui/toast/use-toast";
 
 const props = defineProps<{
     users: MetaDataDto[]
 }>()
 
+const isLoading = ref(false);
+const { toast } = useToast();
+const supabase = useSupabaseClient();
+
 const newUsers = computed(() => props.users.filter(user => user.role !== Roles.ADMIN))
+
+const updateUser = async (update: any, id: string) => {
+    isLoading.value = true
+    const { error } = await supabase.from("User").update(update).eq("id", id);
+
+    if (error) {
+    console.log(error);
+    toast({
+      title: "Error",
+      description: "User Not Updated",
+      variant: "destructive",
+    })
+    isLoading.value = false
+    return
+  }
+
+  toast({
+    title: "Success",
+    description: "User Updated",
+    variant: "success",
+  });
+
+  reloadNuxtApp({force: true})
+  isLoading.value = false
+}
 </script>
 
 <template>
@@ -42,7 +72,7 @@ const newUsers = computed(() => props.users.filter(user => user.role !== Roles.A
                             Status
                         </TableHead>
                         <TableHead class="hidden md:table-cell">
-                            Approve
+                            Activate
                         </TableHead>
                         <TableHead>
                             <span class="sr-only">Actions</span>
@@ -67,14 +97,25 @@ const newUsers = computed(() => props.users.filter(user => user.role !== Roles.A
                         </TableCell>
                         <TableCell class="hidden md:table-cell">
                             <Badge v-if="user.is_active" variant="success" class="ml-auto sm:ml-0">
-                                approved
+                                active
                             </Badge>
                             <Badge v-else variant="warning" class="ml-auto sm:ml-0">
-                                unapproved
+                                inactive
                             </Badge>
                         </TableCell>
                         <TableCell class="hidden md:table-cell">
-                            <Button size="sm"> Approve Account </Button>
+                            <Button @click="updateUser({ is_active: false }, user.id)" v-if="user?.is_active"
+                                variant="outline" size="sm">
+                                <Icon v-if="isLoading" name="svg-spinners:ring-resize" />
+
+                                <p v-if="!isLoading">Deactivate Account</p>
+                            </Button>
+
+                            <Button variant="outline" @click="updateUser({ is_active: true }, user.id)" v-else size="sm">
+                                <Icon v-if="isLoading" name="svg-spinners:ring-resize" />
+
+                                <p v-if="!isLoading">Activate Account</p>
+                            </Button>
                         </TableCell>
                         <TableCell>
                             <Button variant="outline" @click="navigateTo(`/admin/users/${user.id}`)">

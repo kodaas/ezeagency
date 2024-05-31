@@ -17,9 +17,19 @@ const pendingUsers = computed(() => users.value?.filter((user) => !user.is_activ
                     <div class="flex items-center">
                         <TabsList>
                             <TabsTrigger value="all"> All </TabsTrigger>
-                            <TabsTrigger value="approved"> Approved </TabsTrigger>
-                            <TabsTrigger value="unapproved"> Unapproved </TabsTrigger>
+                            <TabsTrigger value="active"> Active </TabsTrigger>
+                            <TabsTrigger value="inactive"> InActive </TabsTrigger>
                         </TabsList>
+                        <div class="ml-auto flex items-center gap-2">
+                            <Button @click="reloadNuxtApp()" class="h-7 gap-1">
+                                <Icon name="solar:restart-line-duotone"/>
+                                <span
+                                    class="sm:not-sr-only sm:whitespace-nowrap"
+                                >
+                                    Refresh
+                                </span>
+                            </Button>
+                        </div>
                     </div>
 
                     <TabsContent value="all">
@@ -29,14 +39,14 @@ const pendingUsers = computed(() => users.value?.filter((user) => !user.is_activ
                         <AdminUsersList v-else :users="users" />
                     </TabsContent>
 
-                    <TabsContent value="approved">
+                    <TabsContent value="active">
                         <div class="w-full p-5" v-if="pending">
                             <Loader />
                         </div>
                         <AdminUsersList v-else :users="activeUsers" />
                     </TabsContent>
 
-                    <TabsContent value="unapproved">
+                    <TabsContent value="inactive">
                         <div class="w-full h-screen p-5" v-if="pending">
                             <Loader />
                         </div>

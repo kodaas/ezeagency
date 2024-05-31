@@ -15,15 +15,34 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
 
     if (!metaData) {
       await supabase.auth.signOut();
-      return navigateTo("/");
+      return
+      // return navigateTo("/auth/login");
     }
 
     // @ts-ignore
     if (!metaData.is_active && !to.fullPath.includes("/pending-approval"))
       return navigateTo("/pending-approval");
 
+    // @ts-ignore
+    if (metaData.is_active && to.fullPath.includes("/pending-approval"))
+      return navigateTo("/");
+
     if (user.value && to.fullPath.includes("/auth")) {
       return navigateTo("/");
+    }
+
+    if (
+      to.fullPath.includes("/admin") &&
+      user.value?.user_metadata.role === "user"
+    ) {
+      return navigateTo("/");
+    }
+
+    if (
+      !to.fullPath.includes("/admin") &&
+      user.value?.user_metadata.role === "admin"
+    ) {
+      return navigateTo("/admin");
     }
   }
 });

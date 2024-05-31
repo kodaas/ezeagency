@@ -45,8 +45,10 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import type { ClassroomModuleDto, MetaDataDto } from '~/models';
+import { useToast } from "@/components/ui/toast/use-toast";
 
 const route = useRoute();
+const { toast } = useToast();
 const isLoading = ref(false);
 const supabase = useSupabaseClient();
 const userData = ref<MetaDataDto | null>(null)
@@ -58,7 +60,14 @@ const getUser = async () => {
   const { data, error } = await supabase.from("User").select("*").eq("id", route.params.id).single();
 
   if (error) {
-    console.log(error);
+    toast({
+      title: "Error",
+      description: "User Not Found",
+      variant: "destructive",
+    })
+
+    navigateTo('/admin/users')
+    return
   } else {
     userData.value = data as MetaDataDto
   }
@@ -71,20 +80,103 @@ const getModules = async () => {
     console.log(error);
   }
 
-  type Modules = ClassroomModuleDto & { status: string } 
+  type Modules = ClassroomModuleDto & { status: string }
 
   const response = data as Modules[]
 
   const activeModule = response?.find((module) => module.id === userData.value?.active_module)
 
-  const temp = response?.map((module) => {
-    return {
-      ...module,
-      status: activeModule?.id! === module.id ? "active" : activeModule?.index! > module.index ? "completed" : "pending",
-    }
-  })
+  let temp;
+
+  if (!activeModule) {
+    
+    temp = response.map((module) => {
+      return {
+        ...module,
+        status: "completed",
+      }
+    })
+
+  } else {
+
+    temp = response?.map((module) => {
+      return {
+        ...module,
+        status: activeModule?.id! === module.id ? "active" : activeModule?.index! > module.index ? "completed" : "pending",
+      }
+    })
+  }
 
   modules.value = temp
+}
+
+const updateUser = async (update: any) => {
+  isLoading.value = true
+  const { error } = await supabase.from("User").update(update).eq("id", route.params.id);
+
+  if (error) {
+    console.log(error);
+    toast({
+      title: "Error",
+      description: "User Not Updated",
+      variant: "destructive",
+    })
+    isLoading.value = false
+    return
+  }
+
+  toast({
+    title: "Success",
+    description: "User Updated",
+    variant: "success",
+  });
+
+  reloadNuxtApp({force: true})
+  isLoading.value = false
+}
+
+const deleteUser = async () => {
+  isLoading.value = true
+
+  const { data, error: deleteError } = await useFetch(`/api/user/${route.params.id}`, {
+    method: "DELETE",
+  })
+
+
+  if (deleteError.value) {
+    console.log(deleteError.value);
+    toast({
+      title: "Error",
+      description: "User Not Deleted",
+      variant: "destructive",
+    })
+    isLoading.value = false
+    return
+  }
+
+  console.log(data)
+
+  const { error } = await supabase.from("User").delete().eq("id", route.params.id);
+
+  if (error) {
+    console.log(error);
+    toast({
+      title: "Error",
+      description: "User Not Deleted",
+      variant: "destructive",
+    })
+    isLoading.value = false
+    return
+  }
+
+  toast({
+    title: "Success",
+    description: "User Deleted",
+    variant: "success",
+  });
+
+  navigateTo('/admin/users')
+  isLoading.value = false
 }
 
 onMounted(async () => {
@@ -113,14 +205,21 @@ onMounted(async () => {
               active
             </Badge>
             <Badge v-else variant="warning" class="ml-auto sm:ml-0">
-              unapproved
+              inactive
             </Badge>
             <div class="hidden items-center gap-2 md:ml-auto md:flex">
-              <Button v-if="userData?.is_active" variant="destructive" size="sm">
-                Disapprove Account
+              <Button @click="updateUser({ is_active: false })" v-if="userData?.is_active" variant="destructive"
+                size="sm">
+                <Icon v-if="isLoading" name="svg-spinners:ring-resize" />
+
+                <p v-if="!isLoading">Deactivate Account</p>
               </Button>
 
-              <Button v-else size="sm"> Approve Account </Button>
+              <Button @click="updateUser({ is_active: true })" v-else size="sm">
+                <Icon v-if="isLoading" name="svg-spinners:ring-resize" />
+
+                <p v-if="!isLoading">Activate Account</p>
+              </Button>
             </div>
           </div>
           <div class="grid gap-4 md:grid-cols-[1fr_250px] lg:grid-cols-3 lg:gap-8">
@@ -176,11 +275,25 @@ onMounted(async () => {
                   </div>
                 </CardContent>
               </Card>
+              <div class="items-center gap-2 mx-auto flex md:hidden">
+                <Button @click="updateUser({ is_active: false })" v-if="userData?.is_active" variant="destructive"
+                  size="sm">
+                  <Icon v-if="isLoading" name="svg-spinners:ring-resize" />
+
+                  <p v-if="!isLoading">Deactivate Account</p>
+                </Button>
+
+                <Button @click="updateUser({ is_active: true })" v-else size="sm">
+                  <Icon v-if="isLoading" name="svg-spinners:ring-resize" />
+
+                  <p v-if="!isLoading">Activate Account</p>
+                </Button>
+              </div>
               <Card>
                 <CardHeader>
                   <CardTitle>Modules</CardTitle>
                   <CardDescription>
-                  Manage all module taken by {{  userData?.first_name }}
+                    Manage all module taken by {{ userData?.first_name }}
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
@@ -193,9 +306,9 @@ onMounted(async () => {
                       </TableRow>
                     </TableHeader>
                     <TableBody>
-                      <TableRow v-for="module in modules" :key="module.id" >
-                        <TableCell class="font-semibold">
-                          {{ module.title}}
+                      <TableRow v-for="module in modules" :key="module.id">
+                        <TableCell @click="navigateTo(`/admin/modules/${module.id}`)" class="font-semibold cursor-pointer hover:text-blue-700 hover:underline group transition-all ease-in-out">
+                          {{ module.title }} <Icon class="text-lg text-transparent group-hover:text-blue-700 transition-all ease-in-out" name="solar:arrow-right-up-broken" />
                         </TableCell>
                         <TableCell>
                           <Badge v-if="module.status === 'active'" variant="info"> active </Badge>
@@ -284,8 +397,10 @@ onMounted(async () => {
                         <DialogClose>
                           <Button size="sm" variant="outline"> Cancel </Button>
                         </DialogClose>
-                        <Button size="sm" variant="destructive">
-                          Delete
+                        <Button @click="deleteUser()" size="sm" variant="destructive">
+                          <Icon v-if="isLoading" name="svg-spinners:ring-resize" />
+
+                          <p v-if="!isLoading">Delete Account</p>
                         </Button>
                       </DialogFooter>
                     </DialogContent>
@@ -293,10 +408,6 @@ onMounted(async () => {
                 </CardContent>
               </Card>
             </div>
-          </div>
-          <div class="flex items-center justify-center gap-2 md:hidden">
-            <Button variant="outline" size="sm"> Discard </Button>
-            <Button size="sm"> Save Product </Button>
           </div>
         </div>
       </main>

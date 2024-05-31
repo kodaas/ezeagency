@@ -27,8 +27,7 @@ const logout = async () => {
         variant: "default",
     });
 
-    navigateTo("/auth/login");
-    window.location.reload();
+    reloadNuxtApp({path: "/auth", force: true})
 };
 </script>
 
@@ -76,9 +75,11 @@ const logout = async () => {
                 Uh-oh!
             </h1>
 
-            <p class="mt-4 text-gray-500">Your needs aproval to continue</p>
+            <p class="mt-4 text-gray-500">Your need aproval to continue</p>
 
             <div class="space-x-8 mt-5">
+                <Button @click="reloadNuxtApp({ force: true })">Retry</Button>
+
                 <Button @click="logout()" variant="outline">
                     <Icon v-if="isLoading" name="svg-spinners:ring-resize" />
 

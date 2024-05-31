@@ -47,8 +47,7 @@ const logout = async () => {
         variant: "success",
     });
 
-    navigateTo("/auth/login");
-    window.location.replace(window.location.origin);
+    reloadNuxtApp({path: "/auth/login", force: true})
 };
 </script>
 

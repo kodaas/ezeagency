@@ -124,9 +124,7 @@ const nextModule = async () => {
         return;
     }
 
-    // console.log(updatedUser)
-
-    window.location.replace(window.location.origin);
+    reloadNuxtApp({path: "/", force: true})
 };
 
 const options = ref<object | null>(null);
