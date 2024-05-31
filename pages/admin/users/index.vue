@@ -36,21 +36,21 @@ const pendingUsers = computed(() => users.value?.filter((user) => !user.is_activ
                         <div class="w-full p-5" v-if="pending">
                             <Loader />
                         </div>
-                        <AdminUsersList v-else :users="users" />
+                        <AdminUsersList v-else :users="users!" />
                     </TabsContent>
 
                     <TabsContent value="active">
                         <div class="w-full p-5" v-if="pending">
                             <Loader />
                         </div>
-                        <AdminUsersList v-else :users="activeUsers" />
+                        <AdminUsersList v-else :users="activeUsers!" />
                     </TabsContent>
 
                     <TabsContent value="inactive">
                         <div class="w-full h-screen p-5" v-if="pending">
                             <Loader />
                         </div>
-                        <AdminUsersList v-else :users="pendingUsers" />
+                        <AdminUsersList v-else :users="pendingUsers!" />
                     </TabsContent>
                 </Tabs>
             </main>

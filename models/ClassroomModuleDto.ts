@@ -7,4 +7,5 @@ export interface ClassroomModuleDto {
   quiz_url: string;
   number_of_sections: number;
   section_id: string
+  module_status: "available" | "draft" | "unavailable";
 }

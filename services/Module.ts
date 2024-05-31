@@ -11,15 +11,20 @@ const getModules = async (): Promise<Array<ClassroomModuleDto> | null> => {
 
   const supabase = useSupabaseClient();
   try {
-    const { data, error } = await supabase.from("Class Module").select("*").order('index', { ascending: true });
+    const { data, error } = await supabase
+      .from("Class Module")
+      .select("*")
+      .order("index", { ascending: true });
 
     if (error) {
       throw error;
     }
 
-    Modules.value = data as any;
-    return Modules.value;
+    Modules.value = data.filter(
+      (module: ClassroomModuleDto) => module.module_status === "available",
+    ) as any;
 
+    return Modules.value;
   } catch (error: any) {
     toast({
       title: "Error",
@@ -31,7 +36,9 @@ const getModules = async (): Promise<Array<ClassroomModuleDto> | null> => {
   }
 };
 
-const getModule = async (module_id: string): Promise<ClassroomModuleDto | null> => {
+const getModule = async (
+  module_id: string,
+): Promise<ClassroomModuleDto | null> => {
   if (Modules.value) {
     // @ts-ignore
     return Modules.value.find((module) => module.id === module_id);
@@ -48,6 +55,17 @@ const getModule = async (module_id: string): Promise<ClassroomModuleDto | null> 
     if (error) {
       throw error;
     }
+
+    // @ts-ignore
+    if (data.module_status !== "available") {
+      toast({
+        title: "Error",
+        description: "Module is not available",
+        variant: "destructive",
+      });
+      
+      return null;
+    }
     return data;
   } catch (error: any) {
     toast({
@@ -60,27 +78,33 @@ const getModule = async (module_id: string): Promise<ClassroomModuleDto | null> 
   }
 };
 
-const getNextModule = async (module_id: string): Promise<ClassroomModuleDto | null> => {
+const getNextModule = async (
+  module_id: string,
+): Promise<ClassroomModuleDto | null> => {
   if (Modules.value) {
-    const activeModule = Modules.value.find((module: ClassroomModuleDto) => module.id === module_id);
+    const activeModule = Modules.value.find(
+      (module: ClassroomModuleDto) => module.id === module_id,
+    );
 
-    const nextModule = Modules.value.find((module: ClassroomModuleDto) => module.index === (activeModule?.index! + 1))
+    const nextModule = Modules.value.find(
+      (module: ClassroomModuleDto) => module.index === activeModule?.index! + 1,
+    );
 
-    return nextModule
+    return nextModule;
   } else {
     toast({
       title: "Error",
       description: "No modules found",
       variant: "destructive",
-    })
-    return null
+    });
+    return null;
   }
-}
+};
 
 export const ModuleService = () => {
   return {
     getModules,
     getModule,
-    getNextModule
+    getNextModule,
   };
 };

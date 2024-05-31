@@ -87,7 +87,7 @@ const getAllMetaData = async (): Promise<MetaDataDto[] | null> => {
     try {
         const { data, error } = await supabase
             .from("User")
-            .select("*");
+            .select("*").order("created_at", { ascending: false });
 
         if (error) {
             throw error
