@@ -15,11 +15,13 @@ const props = defineProps<{
 const isLoading = ref(false);
 const { toast } = useToast();
 const supabase = useSupabaseClient();
+const emit = defineEmits(["updateUser"]);
 
 const newUsers = computed(() => props.users.filter(user => user.role !== Roles.ADMIN))
 
 const updateUser = async (update: any, id: string) => {
     isLoading.value = true
+    // @ts-ignore
     const { error } = await supabase.from("User").update(update).eq("id", id);
 
     if (error) {
@@ -39,7 +41,7 @@ const updateUser = async (update: any, id: string) => {
     variant: "success",
   });
 
-  reloadNuxtApp({force: true})
+  emit("updateUser")
   isLoading.value = false
 }
 </script>

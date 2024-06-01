@@ -20,9 +20,7 @@ const getModules = async (): Promise<Array<ClassroomModuleDto> | null> => {
       throw error;
     }
 
-    Modules.value = data.filter(
-      (module: ClassroomModuleDto) => module.module_status === "available",
-    ) as any;
+    Modules.value = data as any;
 
     return Modules.value;
   } catch (error: any) {
@@ -56,16 +54,6 @@ const getModule = async (
       throw error;
     }
 
-    // @ts-ignore
-    if (data.module_status !== "available") {
-      toast({
-        title: "Error",
-        description: "Module is not available",
-        variant: "destructive",
-      });
-      
-      return null;
-    }
     return data;
   } catch (error: any) {
     toast({

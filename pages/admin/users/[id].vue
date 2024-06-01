@@ -112,6 +112,7 @@ const getModules = async () => {
 
 const updateUser = async (update: any) => {
   isLoading.value = true
+  // @ts-ignore
   const { error } = await supabase.from("User").update(update).eq("id", route.params.id);
 
   if (error) {
@@ -131,7 +132,7 @@ const updateUser = async (update: any) => {
     variant: "success",
   });
 
-  reloadNuxtApp({force: true})
+  await getUser()
   isLoading.value = false
 }
 
